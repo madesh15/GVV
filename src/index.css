@@ -1,0 +1,52 @@
+:root {
+  --navy: #0B1F3A;
+  --navy2: #162D50;
+  --gold: #C9A84C;
+  --gold-l: #E8C96C;
+  --gold-p: #FDF4DC;
+  --rose-deep: #D63384;
+  --rose-bg: #F8E8F0;
+  --white: #FFFFFF;
+  --cream: #FAFAF7;
+  --g100: #F5F5F0;
+  --g200: #E8E8E0;
+  --g400: #BBBBB0;
+  --g500: #888880;
+  --g700: #444440;
+  --g900: #1A1A18;
+  --green: #1A6B3C;
+  --green-l: #E8F5EE;
+  --red: #C0392B;
+  --nav-height: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--g900);
+  overflow-x: hidden;
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.vis {
+  opacity: 1;
+  transform: none;
+}
+
+/* Ticker */
+@keyframes tick {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--g100); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
