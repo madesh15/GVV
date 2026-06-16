@@ -146,6 +146,8 @@ export default function LandingPage({ navigate }) {
       <section style={{ minHeight: '82vh', position: 'relative', overflow: 'hidden' }}>
         <video
           src="/car.mp4"
+          poster="/poster.jpg"
+          preload="auto"
           autoPlay
           muted
           loop
