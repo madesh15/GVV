@@ -101,8 +101,8 @@ export default function ContactPage({ navigate }) {
                       </p>
                     ) : row.label === 'Email' ? (
                       <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>
-                        <a href="mailto:info@gvvdrivingschool.in" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>info@gvvdrivingschool.in</a>
-                        <a href="mailto:ladies@gvvdrivingschool.in" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>ladies@gvvdrivingschool.in</a>
+                        <a href="mailto:info@gvvdrivingschool.in" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>[Gvvds2009@gmail.com]</a>
+                        <a href="mailto:ladies@gvvdrivingschool.in" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>[Gvvds2009@gmail.com]</a>
                       </p>
                     ) : (
                       <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>{row.content.split('\n').map((l, j) => <span key={j} style={{ display: 'block' }}>{l}</span>)}</p>
@@ -131,7 +131,7 @@ export default function ContactPage({ navigate }) {
             </div>
 
             {/* WhatsApp */}
-            <a href="https://wa.me/919884772048" className="whatsapp-box reveal" target="_blank" rel="noreferrer">
+            <a href="https://wa.me/919884772048?text=Hi!%20I%20want%20to%20know%20more%20about%20GVV%20Driving%20School." className="whatsapp-box reveal" target="_blank" rel="noreferrer">
               <div style={{ fontSize: '32px', flexShrink: 0 }}>💬</div>
               <div>
                 <h4 style={{ color: '#fff', fontSize: '16px', fontWeight: 700, marginBottom: '3px' }}>Chat on WhatsApp</h4>
@@ -143,7 +143,10 @@ export default function ContactPage({ navigate }) {
             <div className="reveal" style={{ background: 'linear-gradient(135deg,#2A0818,#430E28)', borderRadius: '16px', padding: '24px', marginBottom: '20px' }}>
               <h4 style={{ color: '#FF9ED4', fontSize: '15px', fontWeight: 700, marginBottom: '6px' }}>♀ Ladies Dedicated Enquiry Line</h4>
               <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13.5px', marginBottom: '12px' }}>For women's program enquiries, speak directly to our ladies enrollment team:</p>
-              <div style={{ color: '#fff', fontSize: '18px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>📞 +91 9884770583</div>
+              <div style={{ color: '#fff', fontSize: '18px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ flexShrink: 0 }}>📞</span>
+                <a href="tel:+919884770583" style={{ color: '#fff', textDecoration: 'none' }}>+91 9884770583</a>
+              </div>
             </div>
 
             {/* Govt reg */}

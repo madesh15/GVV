@@ -21,13 +21,13 @@ const css = `
 `;
 
 const courses = [
-  { cat: 'car', ladies: false, icon: '🚗', iconBg: '#E8F0FB', badgeBg: '#E8F0FB', badgeColor: '#1A3A8B', badge: 'Beginner', title: 'Four Wheeler Beginner Course', desc: 'Start your driving journey from zero. Learn vehicle controls, road rules, traffic signs, and confidence-building maneuvers in real city traffic.', price: '₹4,500', per: '/ full course', dur: '21 days · 2 hrs/day' },
-  { cat: 'bike', ladies: false, icon: '🏍️', iconBg: '#FDF4DC', badgeBg: '#FDF4DC', badgeColor: '#7A5200', badge: 'Two Wheeler', title: 'Two Wheeler / Bike Course', desc: 'Master two-wheeler riding with confidence. Includes balance training, city riding, highway basics, and traffic navigation techniques.', price: '₹2,800', per: '/ full course', dur: '15 days · 1.5 hrs/day' },
-  { cat: 'ladies', ladies: true, icon: '♀️', iconBg: '#F8E8F0', badgeBg: '#F8E8F0', badgeColor: '#8B1A4A', badge: 'Ladies Exclusive', title: 'Ladies Exclusive Four Wheeler', desc: 'Taught entirely by certified female instructors. Private batches, comfortable pace, and a nurturing learning environment exclusively for women.', price: '₹5,200', per: '/ full course', dur: '25 days · 2 hrs/day' },
-  { cat: 'ladies bike', ladies: true, icon: '🛵', iconBg: '#F8E8F0', badgeBg: '#F8E8F0', badgeColor: '#8B1A4A', badge: 'Ladies Two Wheeler', title: 'Ladies Two Wheeler Course', desc: 'Bike and scooter training conducted by our certified female instructors. Safe, private batches designed specifically for women learners.', price: '₹3,200', per: '/ full course', dur: '18 days · 1.5 hrs/day' },
+  { cat: 'car', ladies: false, icon: '🚗', iconBg: '#E8F0FB', badgeBg: '#E8F0FB', badgeColor: '#1A3A8B', badge: 'Beginner', title: 'Car Training with License', desc: 'Start your driving journey from zero. Learn vehicle controls, road rules, traffic signs, and confidence-building maneuvers in real city traffic. Its included the Full RTO Licnese Package ', price: '₹10,500', per: '/ full course', dur: '15 days class · 30 mins/day' },
+  { cat: 'bike', ladies: false, icon: '🏍️', iconBg: '#FDF4DC', badgeBg: '#FDF4DC', badgeColor: '#7A5200', badge: 'Two Wheeler', title: 'Two Wheeler License', desc: 'Master two-wheeler riding with confidence. Includes balance training, city riding, highway basics, and traffic navigation techniques.', price: '₹2,500', per: '/ full course', dur: '2 Months  ' },
+  { cat: 'ladies', ladies: true, icon: '♀️', iconBg: '#F8E8F0', badgeBg: '#F8E8F0', badgeColor: '#8B1A4A', badge: 'Ladies Exclusive', title: 'Car Training with License For Ladies', desc: 'Taught entirely by certified female instructors. Private batches, comfortable pace, and a nurturing learning environment exclusively for women.', price: '₹10,500', per: '/ full course', dur: '25 days · 2 hrs/day' },
+  { cat: 'ladies bike', ladies: true, icon: '🛵', iconBg: '#F8E8F0', badgeBg: '#F8E8F0', badgeColor: '#8B1A4A', badge: 'Ladies Two Wheeler', title: 'Two Wheeler License for Ladies', desc: 'Bike and scooter training conducted by our certified female instructors. Safe, private batches designed specifically for women learners.', price: '₹2,500', per: '/ full course', dur: '2 Months' },
   { cat: 'heavy', ladies: false, icon: '🚛', iconBg: '#E8F5EE', badgeBg: '#E8F5EE', badgeColor: '#1A6B3C', badge: 'Heavy Vehicle', title: 'Heavy Vehicle / LMV Course', desc: 'Specialized training for trucks, buses, and heavy motor vehicles. Includes hill driving, reverse parking, industrial routes, and commercial lane rules.', price: '₹8,500', per: '/ full course', dur: '30 days · 3 hrs/day' },
-  { cat: 'advanced car', ladies: false, icon: '⚡', iconBg: '#EDEBFE', badgeBg: '#EDEBFE', badgeColor: '#4C3AB5', badge: 'Advanced', title: 'Advanced Defensive Driving', desc: 'For already-licensed drivers wanting to upgrade — highway driving, emergency braking, night driving, fuel efficiency, and advanced hazard perception.', price: '₹3,500', per: '/ full course', dur: '10 days · 2 hrs/day' },
-  { cat: 'car advanced', ladies: false, icon: '📜', iconBg: '#FCEBEB', badgeBg: '#FCEBEB', badgeColor: '#8B1A1A', badge: 'RTO Package', title: 'Full RTO Licence Package', desc: "All-inclusive package: learner's licence test prep, permanent licence application, school certificate, and RTO escort on your test day.", price: '₹6,500', per: '/ complete', dur: '30 days · end-to-end' },
+  { cat: 'advanced car', ladies: false, icon: '⚡', iconBg: '#EDEBFE', badgeBg: '#EDEBFE', badgeColor: '#4C3AB5', badge: 'Advanced', title: 'Advanced Defensive Driving', desc: 'For already-licensed drivers wanting to upgrade — highway driving, emergency braking, night driving, fuel efficiency, and advanced hazard perception.', price: '₹5000', per: '/ full course', dur: '10 days · 2 hrs/day' },
+  { cat: 'car advanced', ladies: false, icon: '📜', iconBg: '#FCEBEB', badgeBg: '#FCEBEB', badgeColor: '#8B1A1A', badge: 'RTO Package', title: 'Full RTO Licence Package for Car', desc: "All-inclusive package: learner's licence test prep, permanent licence application, school certificate, and RTO escort on your test day.", price: '₹6,500', per: '/ complete', dur: '30 days · end-to-end' },
 ];
 
 const filters = [
@@ -54,7 +54,7 @@ export default function CoursesPage({ navigate }) {
     return () => observer.disconnect();
   }, [activeFilter]);
 
-  const visible = courses.filter(c => activeFilter === 'all' || c.cat.includes(activeFilter));
+  const visible = courses.filter(c => activeFilter === 'ladies' ? c.ladies : !c.ladies && (activeFilter === 'all' || c.cat.includes(activeFilter)));
 
   return (
     <div ref={ref}>
@@ -109,6 +109,18 @@ export default function CoursesPage({ navigate }) {
               </div>
             </div>
           ))}
+          {activeFilter !== 'ladies' && (
+            <div 
+              className="course-card ladies-card reveal" 
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '30px 26px', cursor: 'pointer', border: '1.5px solid #D63384', backgroundColor: '#FDF4F8' }}
+              onClick={() => setActiveFilter('ladies')}
+            >
+              <div style={{ width: '60px', height: '60px', background: '#F8E8F0', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', marginBottom: '16px' }}>♀️</div>
+              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', fontWeight: 700, color: '#0B1F3A', marginBottom: '12px', lineHeight: 1.25 }}>Ladies Exclusive Courses</h3>
+              <p style={{ fontSize: '13.5px', color: '#888880', lineHeight: 1.65, marginBottom: '24px' }}>Click here to see the exclusive driving and riding course details specially designed for ladies.</p>
+              <button className="btn-enroll-ladies" style={{ width: '100%', justifyContent: 'center' }} onClick={(e) => { e.stopPropagation(); setActiveFilter('ladies'); }}>Click here to see details ♀</button>
+            </div>
+          )}
         </div>
       </div>
       <Footer navigate={navigate} />

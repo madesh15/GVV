@@ -83,7 +83,7 @@ export default function Navbar({ currentPage, navigate, activeSection }) {
       </div>
 
       {/* Desktop links */}
-      <div style={styles.center} className={mobileOpen ? 'nav-mobile-hidden' : 'nav-desktop'}>
+      <div style={styles.center} className="nav-desktop">
         <div style={styles.links}>
           {links.map(l => (
             <span key={l.key} style={linkStyle(l.key)} onClick={() => go(l.key)}>{l.label}</span>
