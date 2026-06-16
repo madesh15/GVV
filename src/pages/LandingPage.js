@@ -31,6 +31,8 @@ const css = `
 .btn-ghost:hover { border-color: #C9A84C; color: #C9A84C; }
 .btn-rose { background: #D63384; color: #fff; font-weight: 700; font-size: 14.5px; padding: 13px 26px; border-radius: 10px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .2s; font-family: 'DM Sans',sans-serif; }
 .btn-rose:hover { transform: translateY(-2px); opacity: .9; }
+.btn-rose-outline { background: rgba(214,51,132,0.15); color: #FFB3D9; font-weight: 600; font-size: 14.5px; padding: 13px 26px; border-radius: 10px; border: 1.5px solid rgba(214,51,132,0.6); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .2s; font-family: 'DM Sans',sans-serif; backdrop-filter: blur(4px); }
+.btn-rose-outline:hover { border-color: #D63384; color: #fff; background: rgba(214,51,132,0.35); }
 .btn-navy { background: #0B1F3A; color: #fff; font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: 10px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .2s; font-family: 'DM Sans',sans-serif; }
 .btn-navy:hover { background: #162D50; transform: translateY(-1px); }
 .btn-navy-outline { background: transparent; color: #0B1F3A; font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: 10px; border: 2px solid #0B1F3A; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all .2s; font-family: 'DM Sans',sans-serif; }
@@ -167,7 +169,7 @@ export default function LandingPage({ navigate }) {
           minHeight: '82vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', textAlign: 'center', paddingBottom: '90px', gap: '26px',
         }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.35)', color: '#C9A84C', fontSize: '11.5px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', padding: '8px 16px', borderRadius: '100px', marginBottom: '22px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(7, 5, 0, 0.18)', border: '1px solid rgba(201,168,76,0.35)', color: '#f1f90bff', fontSize: '11.5px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', padding: '8px 16px', borderRadius: '100px', marginBottom: '22px' }}>
               ✦ Government Approved &amp; Certified
             </div>
             <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(38px,4.5vw,64px)', fontWeight: 900, lineHeight: 1.02, color: '#fff', marginBottom: '18px' }}>
@@ -179,7 +181,7 @@ export default function LandingPage({ navigate }) {
           </div>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <button className="btn-gold" onClick={() => navigate('courses')}>View Courses →</button>
-            <button className="btn-ghost" onClick={() => navigate('ladies')}>♀ Ladies Program</button>
+            <button className="btn-rose-outline" onClick={() => navigate('ladies')}>♀ Ladies Program</button>
           </div>
         </div>
       </section>
