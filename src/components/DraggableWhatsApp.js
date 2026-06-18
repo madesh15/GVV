@@ -15,6 +15,7 @@ export default function DraggableWhatsApp() {
     buttonY: 0, 
     hasMoved: false 
   });
+  const lastTouchTime = useRef(0);
 
   // Initialize position to bottom-right (32px from bottom, 32px from right)
   useEffect(() => {
@@ -70,9 +71,6 @@ export default function DraggableWhatsApp() {
 
   const handleEnd = () => {
     if (!dragInfo.current.isDragging) return;
-    if (!dragInfo.current.hasMoved) {
-      setIsOpen(o => !o);
-    }
     dragInfo.current.isDragging = false;
   };
 
@@ -245,12 +243,31 @@ export default function DraggableWhatsApp() {
         style={buttonStyle}
         onMouseDown={(e) => {
           if (e.button === 0) { // left click only
-            handleStart(e.clientX, e.clientY);
+            const now = Date.now();
+            if (now - lastTouchTime.current < 400) {
+              handleStart(e.clientX, e.clientY);
+              setIsOpen(false);
+            } else {
+              dragInfo.current.isDragging = false;
+            }
+            lastTouchTime.current = now;
           }
         }}
         onTouchStart={(e) => {
           if (e.touches.length === 1) {
-            handleStart(e.touches[0].clientX, e.touches[0].clientY);
+            const now = Date.now();
+            if (now - lastTouchTime.current < 400) {
+              handleStart(e.touches[0].clientX, e.touches[0].clientY);
+              setIsOpen(false);
+            } else {
+              dragInfo.current.isDragging = false;
+            }
+            lastTouchTime.current = now;
+          }
+        }}
+        onClick={(e) => {
+          if (!dragInfo.current.hasMoved) {
+            setIsOpen(o => !o);
           }
         }}
         onMouseEnter={() => setIsHovered(true)}
