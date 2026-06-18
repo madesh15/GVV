@@ -141,6 +141,10 @@ export default function LandingPage({ navigate }) {
     if (!enroll.course.trim()) errors.course = true;
     setEnrollErrors(errors);
     if (Object.keys(errors).length) return;
+
+    const text = `New Enrollment Inquiry!%0A%0A*Name:* ${enroll.name}%0A*Phone:* ${enroll.phone}%0A*Email:* ${enroll.email || 'N/A'}%0A*Course:* ${enroll.course}%0A*Notes:* ${enroll.notes || 'None'}`;
+    window.open(`https://wa.me/919884772048?text=${text}`, '_blank');
+
     setEnrollSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

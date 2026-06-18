@@ -67,6 +67,10 @@ export default function LadiesPage({ navigate }) {
     if (!form.agree) errs.agree = true;
     setErrors(errs);
     if (Object.keys(errs).length) return;
+
+    const text = `New Ladies Program Enrollment!%0A%0A*Name:* ${form.name}%0A*Phone:* ${form.phone}%0A*Email:* ${form.email || 'N/A'}%0A*DOB:* ${form.dob || 'N/A'}%0A*Course:* ${form.course}%0A*Batch:* ${form.batch || 'N/A'}%0A*Area:* ${form.area || 'N/A'}`;
+    window.open(`https://wa.me/919884770583?text=${text}`, '_blank');
+
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
