@@ -200,8 +200,8 @@ export default function LandingPage({ navigate }) {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(7, 5, 0, 0.18)', border: '1px solid rgba(201,168,76,0.35)', color: '#f1f90bff', fontSize: '11.5px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', padding: '8px 16px', borderRadius: '100px', marginBottom: '22px' }}>
               {t('hero_badge')}
             </div>
-            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(38px,4.5vw,64px)', fontWeight: 900, lineHeight: 1.12, color: '#fff', marginBottom: '18px', textAlign: 'center' }}>
-              {t('hero_title_1')}<em style={{ color: '#C9A84C', fontStyle: 'italic' }}>{t('hero_title_em')}</em>{t('hero_title_line1_end') ? <span> {t('hero_title_line1_end')}</span> : null}
+            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(38px,4.5vw,64px)', fontWeight: 900, lineHeight: 1.02, color: '#fff', marginBottom: '18px' }}>
+              {t('hero_title_1')}<em style={{ color: '#C9A84C', fontStyle: 'italic' }}>{t('hero_title_em')}</em>
               <br />
               {t('hero_title_line2')}
             </h1>
@@ -272,7 +272,7 @@ export default function LandingPage({ navigate }) {
       </section>
 
       {/* ── LADIES STRIP ── */}
-      <section id="ladies-section" style={{ background: 'linear-gradient(135deg,#2A0818 0%,#430E28 50%,#2A0818 100%)', padding: '80px 5%', position: 'relative', overflow: 'hidden', scrollMarginTop: '110px' }}>
+      <section id="ladies-section" style={{ background: 'linear-gradient(135deg,#2A0818 0%,#430E28 50%,#2A0818 100%)', padding: '80px 5%', position: 'relative', overflow: 'hidden' }}>
         <div className="ls-inner" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
           <div className="reveal">
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'rgba(214,51,132,0.18)', border: '1.5px solid #D63384', color: '#D63384', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '9px 18px', borderRadius: '100px', marginBottom: '24px' }}>{t('ladies_strip_badge')}</div>
