@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Footer from '../components/Footer';
+import { useLanguage } from '../context/LanguageContext';
 
 const css = `
 .ticker-wrap { background: #C9A84C; overflow: hidden; height: 40px; display: flex; align-items: center; }
@@ -67,34 +68,61 @@ const css = `
 }
 `;
 
-const tickerItems = [
-  'Government Approved Driving School',
-  'Ladies Teaches Ladies — Safe & Empowering',
-  '99% Passing Rate',
-  'Certified Expert Instructors',
-  'Morning & Evening Batches Available',
-  'RTO Licence Assistance Included',
+const tickerKeys = [
+  'ticker_1',
+  'ticker_2',
+  'ticker_3',
+  'ticker_4',
+  'ticker_5',
+  'ticker_6',
 ];
 
 const whyCards = [
-  { icon: '🏛️', title: 'Government Approved', text: 'Fully licensed by the Tamil Nadu Regional Transport Authority. Your certification is 100% legally valid across India.' },
-  { icon: '♀', title: 'Ladies Teaches Ladies', text: 'Exclusive certified female instructors for women students — a comfortable, empowering and respectful learning experience.' },
-  { icon: '🚗', title: 'Dual-Control Vehicles', text: 'All training vehicles are equipped with instructor-side dual controls — because your safety is our absolute top priority.' },
-  { icon: '📊', title: '99% Passing Rate', text: 'Industry-leading pass rates through our structured curriculum, mock tests, and thorough traffic law coaching.' },
-  { icon: '📅', title: 'Flexible Scheduling', text: 'Morning, afternoon and evening batches available 7 days a week. We work around your schedule.' },
-  { icon: '🛡️', title: 'Insured Training', text: 'Every student and vehicle is fully insured during training sessions. Learn with complete peace of mind.' },
+  { icon: '🏛️', titleKey: 'why_1_title', textKey: 'why_1_desc' },
+  { icon: '♀', titleKey: 'why_2_title', textKey: 'why_2_desc' },
+  { icon: '🚗', titleKey: 'why_3_title', textKey: 'why_3_desc' },
+  { icon: '📊', titleKey: 'why_4_title', textKey: 'why_4_desc' },
+  { icon: '📅', titleKey: 'why_5_title', textKey: 'why_5_desc' },
+  { icon: '🛡️', titleKey: 'why_6_title', textKey: 'why_6_desc' },
 ];
 
 const reviews = [
-  { stars: 5, text: '"I recently completed a 15-day driving class, and my instructor was Hari. He is a very patient and supportive instructor who explains everything clearly and boosts your confidence. Each day was well structured, gradually building up skills. By the end of the course, I felt comfortable and prepared to drive independently. I highly recommend this class to anyone looking for a stress-free and effective way to learn driving!"', name: 'swetha kalaiselvan', tag: '♀ Ladies Program Graduate', initials: 'AN', bg: '#F8E8F0', color: '#D63384' },
-  { stars: 5, text: '"One of the best driving school have ever seen, and its cool to learn , and even their service were so polite and good."', name: 'Vikram Selvaraj', tag: 'Four Wheeler Course', initials: 'SK', bg: '#E8F0FB', color: '#1A3A8B' },
-  { stars: 5, text: '"Comfortable ,helpful and friendly atmosphere... they have lady trainer for ladies.. their teaching techniques are unique and 100% recommended for beginners!"', name: 'sharon charu', tag: '♀ Ladies Program — Parent Enrolled', initials: 'MR', bg: '#FDF4DC', color: '#7A5200' },
-  { stars: 5, text: '"Had a great experience with this driving class. They were very flexible with my timings, which made it really convenient for me. Madhesh and Sanjay brother taught very well and made the whole learning process smooth and comfortable. Highly recommended!"', name: 'Faiizi', tag: 'Full RTO Package', initials: 'KP', bg: '#E8F5EE', color: '#1A6B3C' },
-  { stars: 5, text: '"I was trained by Mrs. Devi, who was extremely patient and ensured I learned proper driving skills step by step. Her calm and supportive guidance made a big difference in my learning experience. The last two sessions were conducted by Mr. Sanjay, who recognized my progress and focused on refining the areas where I needed improvement. His feedback was precise and very helpful."', name: 'Priya Subramani', tag: '♀ Two Wheeler — Ladies Instructor', initials: 'SV', bg: '#FAECE7', color: '#8B3A1A' },
-  { stars: 5, text: '"Professional school, modern cars, friendly staff. The government certification is genuine and I had zero issues at the RTO. Highly recommend GVV to anyone in Chennai!"', name: 'Dinesh Murali', tag: 'Advanced Defensive Driving', initials: 'DM', bg: '#EDEBFE', color: '#4C3AB5' },
+  { stars: 5, textKey: 'review_1_text', nameKey: 'review_1_name', tagKey: 'review_tag_ladies', initials: 'AN', bg: '#F8E8F0', color: '#D63384' },
+  { stars: 5, textKey: 'review_2_text', nameKey: 'review_2_name', tagKey: 'review_tag_four', initials: 'SK', bg: '#E8F0FB', color: '#1A3A8B' },
+  { stars: 5, textKey: 'review_3_text', nameKey: 'review_3_name', tagKey: 'review_tag_ladies_parent', initials: 'MR', bg: '#FDF4DC', color: '#7A5200' },
+  { stars: 5, textKey: 'review_4_text', nameKey: 'review_4_name', tagKey: 'review_tag_rto', initials: 'KP', bg: '#E8F5EE', color: '#1A6B3C' },
+  { stars: 5, textKey: 'review_5_text', nameKey: 'review_5_name', tagKey: 'review_tag_two_ladies', initials: 'SV', bg: '#FAECE7', color: '#8B3A1A' },
+  { stars: 5, textKey: 'review_6_text', nameKey: 'review_6_name', tagKey: 'review_tag_advanced', initials: 'DM', bg: '#EDEBFE', color: '#4C3AB5' },
+];
+
+const certRows = [
+  { icon: '🏛️', titleKey: 'about_cert_1_title', descKey: 'about_cert_1_desc' },
+  { icon: '🛡️', titleKey: 'about_cert_2_title', descKey: 'about_cert_2_desc' },
+  { icon: '♀', titleKey: 'about_cert_3_title', descKey: 'about_cert_3_desc' },
+  { icon: '🚗', titleKey: 'about_cert_4_title', descKey: 'about_cert_4_desc' }
+];
+
+const statRows = [
+  { valKey: 'about_stat_2_val', lblKey: 'about_stat_2_lbl' },
+  { valKey: 'about_stat_3_val', lblKey: 'about_stat_3_lbl' },
+  { valKey: 'about_stat_4_val', lblKey: 'about_stat_4_lbl' }
+];
+
+const ladiesBadges = [
+  'ladies_strip_badge_1',
+  'ladies_strip_badge_2',
+  'ladies_strip_badge_3',
+  'ladies_strip_badge_4'
+];
+
+const ladiesMiniFeats = [
+  { icon: '👩‍🏫', titleKey: 'ladies_strip_mini_1_title', descKey: 'ladies_strip_mini_1_desc' },
+  { icon: '🌸', titleKey: 'ladies_strip_mini_2_title', descKey: 'ladies_strip_mini_2_desc' },
+  { icon: '🏅', titleKey: 'ladies_strip_mini_3_title', descKey: 'ladies_strip_mini_3_desc' }
 ];
 
 export default function LandingPage({ navigate }) {
+  const { t, lang } = useLanguage();
   const [enroll, setEnroll] = useState({ name: '', phone: '', email: '', course: '', notes: '' });
   const [enrollSubmitted, setEnrollSubmitted] = useState(false);
   const [enrollErrors, setEnrollErrors] = useState({});
@@ -138,8 +166,8 @@ export default function LandingPage({ navigate }) {
       {/* ── TICKER ── */}
       <div className="ticker-wrap" style={{ marginTop: '72px' }}>
         <div className="ticker">
-          {[...tickerItems, ...tickerItems].map((t, i) => (
-            <span className="ticker-item" key={i}>{t}</span>
+          {[...tickerKeys, ...tickerKeys].map((tk, i) => (
+            <span className="ticker-item" key={i}>{t(tk)}</span>
           ))}
         </div>
       </div>
@@ -170,18 +198,20 @@ export default function LandingPage({ navigate }) {
         }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(7, 5, 0, 0.18)', border: '1px solid rgba(201,168,76,0.35)', color: '#f1f90bff', fontSize: '11.5px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', padding: '8px 16px', borderRadius: '100px', marginBottom: '22px' }}>
-              ✦ Government Approved &amp; Certified
+              {t('hero_badge')}
             </div>
-            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(38px,4.5vw,64px)', fontWeight: 900, lineHeight: 1.02, color: '#fff', marginBottom: '18px' }}>
-              Drive with <em style={{ color: '#C9A84C', fontStyle: 'italic' }}>Confidence.</em><br />Learn with Excellence.
+            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(38px,4.5vw,64px)', fontWeight: 900, lineHeight: 1.12, color: '#fff', marginBottom: '18px', textAlign: 'center' }}>
+              {t('hero_title_1')}<em style={{ color: '#C9A84C', fontStyle: 'italic' }}>{t('hero_title_em')}</em>{t('hero_title_line1_end') ? <span> {t('hero_title_line1_end')}</span> : null}
+              <br />
+              {t('hero_title_line2')}
             </h1>
-            <p style={{ fontSize: '16.5px', lineHeight: 1.75, color: 'rgba(255,255,255,0.75)', marginBottom: '34px', maxWidth: '640px' }}>
-              GVV Driving School — Chennai's most trusted government-approved driving institution, shaping safe and skilled drivers since 2009.
+            <p style={{ fontSize: '16.5px', lineHeight: 1.75, color: 'rgba(255,255,255,0.75)', marginBottom: '34px', maxWidth: '640px', marginLeft: 'auto', marginRight: 'auto' }}>
+              {t('hero_subtitle')}
             </p>
           </div>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <button className="btn-gold" onClick={() => navigate('courses')}>View Courses →</button>
-            <button className="btn-rose-outline" onClick={() => navigate('ladies')}>♀ Ladies Program</button>
+            <button className="btn-gold" onClick={() => navigate('courses')}>{t('view_courses')}</button>
+            <button className="btn-rose-outline" onClick={() => navigate('ladies')}>{t('ladies_program_btn')}</button>
           </div>
         </div>
       </section>
@@ -190,32 +220,32 @@ export default function LandingPage({ navigate }) {
       <section style={{ background: '#fff', padding: '90px 5%' }}>
         <div className="about-inner" style={{ maxWidth: '1160px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '70px', alignItems: 'center' }}>
           <div className="reveal">
-            <span style={{ display: 'inline-block', background: '#FDF4DC', color: '#7A5200', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.4)', marginBottom: '18px' }}>About GVV</span>
-            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.2vw,42px)', fontWeight: 900, color: '#0B1F3A', lineHeight: 1.18, marginBottom: '16px' }}>Chennai's Premier Government-Approved Driving School</h2>
-            <p style={{ fontSize: '15.5px', color: '#888880', lineHeight: 1.8, marginBottom: '14px' }}>Founded in 2009, GVV Driving School has grown into one of Tamil Nadu's most respected and trusted driver training institutions. We are fully licensed under the Tamil Nadu Regional Transport Authority and committed to producing safe, skilled, and responsible drivers.</p>
-            <p style={{ fontSize: '15.5px', color: '#888880', lineHeight: 1.8, marginBottom: '14px' }}>Our philosophy is simple: every driver deserves world-class training in a safe, supportive environment. That's why we offer specialized programs — including our landmark <strong>Ladies Teaches Ladies</strong> initiative.</p>
+            <span style={{ display: 'inline-block', background: '#FDF4DC', color: '#7A5200', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.4)', marginBottom: '18px' }}>{t('about_badge')}</span>
+            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.2vw,42px)', fontWeight: 900, color: '#0B1F3A', lineHeight: 1.18, marginBottom: '16px' }}>{t('about_title')}</h2>
+            <p style={{ fontSize: '15.5px', color: '#888880', lineHeight: 1.8, marginBottom: '14px' }}>{t('about_desc1')}</p>
+            <p style={{ fontSize: '15.5px', color: '#888880', lineHeight: 1.8, marginBottom: '14px' }}>{t('about_desc2')}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px' }}>
-              {[['🏛️','Tamil Nadu RTA Certified','Reg. No: TN/DS/2005/0412 · Issued by Regional Transport Authority, Chennai'],
-                ['🛡️','Fully Insured Training Sessions','All students and vehicles covered during every driving session'],
-                ['♀','Certified Female Instructors','Government-licensed women instructors for our Ladies Program'],
-                ['🚗','Dual-Control Training Vehicles','Modern dual-control cars for maximum learner safety at all times']].map(([ci,strong,span])=>(
-                <div className="cert-row" key={strong}>
-                  <div style={{ fontSize: '20px', flexShrink: 0 }}>{ci}</div>
-                  <div><strong style={{ fontSize: '13.5px', color: '#0B1F3A', fontWeight: 600 }}>{strong}</strong><span style={{ fontSize: '12px', color: '#888880', display: 'block', marginTop: '1px' }}>{span}</span></div>
+              {certRows.map(c => (
+                <div className="cert-row" key={c.titleKey}>
+                  <div style={{ fontSize: '20px', flexShrink: 0 }}>{c.icon}</div>
+                  <div>
+                    <strong style={{ fontSize: '13.5px', color: '#0B1F3A', fontWeight: 600 }}>{t(c.titleKey)}</strong>
+                    <span style={{ fontSize: '12px', color: '#888880', display: 'block', marginTop: '1px' }}>{t(c.descKey)}</span>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
           <div className="about-visual-cards reveal" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ background: '#0B1F3A', borderRadius: '18px', padding: '28px', color: '#fff' }}>
-              <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '52px', color: '#C9A84C', lineHeight: 1 }}>15,000+</div>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13.5px', marginTop: '4px' }}>Licensed drivers successfully trained and certified since 2009</p>
+              <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '52px', color: '#C9A84C', lineHeight: 1 }}>{t('about_stat_1_val')}</div>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13.5px', marginTop: '4px' }}>{t('about_stat_1_lbl')}</p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-              {[['4,200+','Women trained through Ladies Program'],['99%','First-attempt RTO pass rate'],['15+','Years of trusted service']].map(([n,l])=>(
-                <div key={l} style={{ background: '#F5F5F0', border: '1px solid #E8E8E0', borderRadius: '14px', padding: '20px' }}>
-                  <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '34px', color: '#0B1F3A', lineHeight: 1 }}>{n}</div>
-                  <p style={{ fontSize: '12px', color: '#888880', marginTop: '4px' }}>{l}</p>
+              {statRows.map(s => (
+                <div key={s.valKey} style={{ background: '#F5F5F0', border: '1px solid #E8E8E0', borderRadius: '14px', padding: '20px' }}>
+                  <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '34px', color: '#0B1F3A', lineHeight: 1 }}>{t(s.valKey)}</div>
+                  <p style={{ fontSize: '12px', color: '#888880', marginTop: '4px' }}>{t(s.lblKey)}</p>
                 </div>
               ))}
             </div>
@@ -226,48 +256,48 @@ export default function LandingPage({ navigate }) {
       {/* ── WHY US ── */}
       <section style={{ background: '#0B1F3A', padding: '90px 5%' }}>
         <div style={{ textAlign: 'center', marginBottom: '56px' }} className="reveal">
-          <div style={{ display: 'inline-block', background: 'rgba(201,168,76,0.15)', color: '#C9A84C', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.3)', marginBottom: '16px' }}>Why Choose GVV</div>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: '12px' }}>The GVV Difference</h2>
-          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>We don't just teach driving. We build responsible, confident, and safe drivers for life.</p>
+          <div style={{ display: 'inline-block', background: 'rgba(201,168,76,0.15)', color: '#C9A84C', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.3)', marginBottom: '16px' }}>{t('why_badge')}</div>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: '12px' }}>{t('why_title')}</h2>
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>{t('why_desc')}</p>
         </div>
         <div className="why-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: '18px', maxWidth: '1160px', margin: '0 auto' }}>
           {whyCards.map(c => (
-            <div className="why-card reveal" key={c.title}>
+            <div className="why-card reveal" key={c.titleKey}>
               <div style={{ fontSize: '30px', marginBottom: '16px' }}>{c.icon}</div>
-              <h3 style={{ color: '#fff', fontSize: '17px', fontWeight: 600, marginBottom: '9px' }}>{c.title}</h3>
-              <p style={{ color: 'rgba(255,255,255,0.52)', fontSize: '13.5px', lineHeight: 1.7 }}>{c.text}</p>
+              <h3 style={{ color: '#fff', fontSize: '17px', fontWeight: 600, marginBottom: '9px' }}>{t(c.titleKey)}</h3>
+              <p style={{ color: 'rgba(255,255,255,0.52)', fontSize: '13.5px', lineHeight: 1.7 }}>{t(c.textKey)}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── LADIES STRIP ── */}
-      <section id="ladies-section" style={{ background: 'linear-gradient(135deg,#2A0818 0%,#430E28 50%,#2A0818 100%)', padding: '80px 5%', position: 'relative', overflow: 'hidden' }}>
+      <section id="ladies-section" style={{ background: 'linear-gradient(135deg,#2A0818 0%,#430E28 50%,#2A0818 100%)', padding: '80px 5%', position: 'relative', overflow: 'hidden', scrollMarginTop: '110px' }}>
         <div className="ls-inner" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
           <div className="reveal">
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'rgba(214,51,132,0.18)', border: '1.5px solid #D63384', color: '#D63384', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '9px 18px', borderRadius: '100px', marginBottom: '24px' }}>♀ Exclusively for Women</div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'rgba(214,51,132,0.18)', border: '1.5px solid #D63384', color: '#D63384', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '9px 18px', borderRadius: '100px', marginBottom: '24px' }}>{t('ladies_strip_badge')}</div>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(28px,3.8vw,50px)', fontWeight: 900, color: '#fff', lineHeight: 1.12, marginBottom: '16px' }}>
-              Ladies <span style={{ color: '#FF6BB0', fontStyle: 'italic' }}>Teaches</span> Ladies
+              {t('ladies_strip_title')}<span style={{ color: '#FF6BB0', fontStyle: 'italic' }}>{t('ladies_strip_title_em')}</span>{t('ladies_strip_title_end')}
             </h2>
-            <p style={{ fontSize: '15.5px', lineHeight: 1.8, color: 'rgba(255,255,255,0.68)', marginBottom: '28px' }}>At GVV, we believe every woman deserves to learn driving in a comfortable, safe, and empowering environment. Our certified female instructors are specially trained to guide you with patience, care, and expertise.</p>
+            <p style={{ fontSize: '15.5px', lineHeight: 1.8, color: 'rgba(255,255,255,0.68)', marginBottom: '28px' }}>{t('ladies_strip_desc')}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '32px' }}>
-              {['♀ Certified Female Instructors','🛡️ Private Batches','⏰ Ladies-Only Timings','📋 RTO Support'].map(p=>(
-                <span key={p} style={{ background: 'rgba(255,107,176,0.12)', border: '1px solid rgba(255,107,176,0.25)', color: '#FF9ED4', fontSize: '12.5px', fontWeight: 600, padding: '8px 16px', borderRadius: '100px' }}>{p}</span>
+              {ladiesBadges.map(k => (
+                <span key={k} style={{ background: 'rgba(255,107,176,0.12)', border: '1px solid rgba(255,107,176,0.25)', color: '#FF9ED4', fontSize: '12.5px', fontWeight: 600, padding: '8px 16px', borderRadius: '100px' }}>{t(k)}</span>
               ))}
             </div>
-            <button className="btn-rose" onClick={() => navigate('ladies')}>♀ View Ladies Program →</button>
+            <button className="btn-rose" onClick={() => navigate('ladies')}>{t('ladies_program_btn')} →</button>
           </div>
           <div className="ls-right reveal" style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ background: 'rgba(255,107,176,0.1)', border: '1px solid rgba(255,107,176,0.22)', borderRadius: '16px', padding: '28px' }}>
-              <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '56px', color: '#FF6BB0', lineHeight: 1 }}>4,200+</div>
-              <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13.5px', marginTop: '5px' }}>Women successfully trained and licensed at GVV</div>
+              <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '56px', color: '#FF6BB0', lineHeight: 1 }}>{t('ladies_strip_stat_val')}</div>
+              <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13.5px', marginTop: '5px' }}>{t('ladies_strip_stat_lbl')}</div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              {[['👩‍🏫','Female Instructors Only','No exception for women\'s sessions'],['🌸','Zero Discomfort Guarantee','Reschedule freely if ever uncomfortable'],['📱','WhatsApp Community','Join our women learners\' group'],['🏅','Govt. Certified','Female instructors govt-licenced']].map(([icon,h,p])=>(
-                <div className="ls-mini" key={h}>
-                  <div style={{ fontSize: '22px', marginBottom: '8px' }}>{icon}</div>
-                  <h4 style={{ color: '#FF9ED4', fontSize: '13px', fontWeight: 600, marginBottom: '3px' }}>{h}</h4>
-                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11.5px', lineHeight: 1.5 }}>{p}</p>
+              {ladiesMiniFeats.map(m => (
+                <div className="ls-mini" key={m.titleKey}>
+                  <div style={{ fontSize: '22px', marginBottom: '8px' }}>{m.icon}</div>
+                  <h4 style={{ color: '#FF9ED4', fontSize: '13px', fontWeight: 600, marginBottom: '3px' }}>{t(m.titleKey)}</h4>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11.5px', lineHeight: 1.5 }}>{t(m.descKey)}</p>
                 </div>
               ))}
             </div>
@@ -278,20 +308,20 @@ export default function LandingPage({ navigate }) {
       {/* ── REVIEWS ── */}
       <section id="reviews-section" style={{ background: '#F5F5F0', padding: '90px 5%', scrollMarginTop: '110px' }}>
         <div style={{ textAlign: 'center', marginBottom: '56px' }} className="reveal">
-          <span style={{ display: 'inline-block', background: '#FDF4DC', color: '#7A5200', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.4)', marginBottom: '16px' }}>Student Reviews</span>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 900, color: '#0B1F3A', lineHeight: 1.15, marginBottom: '12px' }}>What Our Students Say</h2>
-          <p style={{ fontSize: '16px', color: '#888880', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>Real words from real drivers who started their journey with GVV Driving School.</p>
+          <span style={{ display: 'inline-block', background: '#FDF4DC', color: '#7A5200', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.4)', marginBottom: '16px' }}>{t('reviews_badge')}</span>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 900, color: '#0B1F3A', lineHeight: 1.15, marginBottom: '12px' }}>{t('reviews_title')}</h2>
+          <p style={{ fontSize: '16px', color: '#888880', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>{t('reviews_desc')}</p>
         </div>
         <div className="reviews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '22px', maxWidth: '1160px', margin: '0 auto' }}>
           {reviews.map(r => (
-            <div className="review-card reveal" key={r.name}>
+            <div className="review-card reveal" key={r.nameKey}>
               <div style={{ color: '#C9A84C', fontSize: '15px', letterSpacing: '2px', marginBottom: '14px' }}>{'★'.repeat(r.stars)}</div>
-              <p style={{ fontSize: '14.5px', lineHeight: 1.75, color: '#444440', marginBottom: '20px', fontStyle: 'italic' }}>{r.text}</p>
+              <p style={{ fontSize: '14.5px', lineHeight: 1.75, color: '#444440', marginBottom: '20px', fontStyle: 'italic' }}>{t(r.textKey)}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, flexShrink: 0, background: r.bg, color: r.color }}>{r.initials}</div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '13.5px', color: '#0B1F3A' }}>{r.name}</div>
-                  <div style={{ fontSize: '11.5px', color: '#888880' }}>{r.tag}</div>
+                  <div className="review-card-name" style={{ fontWeight: 600, fontSize: '13.5px', color: '#0B1F3A' }}>{t(r.nameKey)}</div>
+                  <div className="review-card-tag" style={{ fontSize: '11.5px', color: '#888880' }}>{t(r.tagKey)}</div>
                 </div>
               </div>
             </div>
@@ -301,22 +331,22 @@ export default function LandingPage({ navigate }) {
 
       {/* ── CTA STRIP ── */}
       <section style={{ background: '#C9A84C', padding: '70px 5%', textAlign: 'center' }}>
-        <h2 className="reveal" style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 900, color: '#0B1F3A', marginBottom: '12px' }}>Ready to Start Your Driving Journey?</h2>
-        <p className="reveal" style={{ fontSize: '16px', color: 'rgba(11,31,58,0.65)', marginBottom: '32px' }}>Join 15,000+ drivers who chose GVV. Government approved, expert-led, results guaranteed.</p>
+        <h2 className="reveal" style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 900, color: '#0B1F3A', marginBottom: '12px' }}>{t('cta_title')}</h2>
+        <p className="reveal" style={{ fontSize: '16px', color: 'rgba(11,31,58,0.65)', marginBottom: '32px' }}>{t('cta_desc')}</p>
         <div className="cta-btns reveal" style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="btn-navy" onClick={() => navigate('courses')}>🚗 View All Courses</button>
-          <button className="btn-navy-outline" onClick={() => navigate('ladies')}>♀ Ladies Program</button>
-          <button className="btn-navy-outline" onClick={() => navigate('contact')}>📞 Contact Us</button>
-          <button className="btn-navy" onClick={() => navigate('enroll')}>✍️ Enroll Now</button>
+          <button className="btn-navy" onClick={() => navigate('courses')}>{t('view_courses')}</button>
+          <button className="btn-navy-outline" onClick={() => navigate('ladies')}>{t('ladies_program_btn')}</button>
+          <button className="btn-navy-outline" onClick={() => navigate('contact')}>{t('contact_us_btn')}</button>
+          <button className="btn-navy" onClick={() => navigate('enroll')}>{t('enroll_now_btn')}</button>
         </div>
       </section>
 
       <section id="enroll-section" style={{ background: '#fff', padding: '90px 5%', scrollMarginTop: '110px' }}>
         <div style={{ maxWidth: '980px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '42px' }}>
-            <span style={{ display: 'inline-block', background: '#F9F0CE', color: '#7A5200', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '8px 16px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.4)', marginBottom: '16px' }}>Enroll with GVV</span>
-            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(28px,3.8vw,44px)', fontWeight: 900, color: '#0B1F3A', marginBottom: '12px' }}>Submit Your Enrollment Request</h2>
-            <p style={{ fontSize: '16px', color: '#6F6F6F', maxWidth: '660px', margin: '0 auto', lineHeight: 1.75 }}>Fill out the form below and our admissions team will contact you to finalize your course, batch, and training schedule.</p>
+            <span style={{ display: 'inline-block', background: '#F9F0CE', color: '#7A5200', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '8px 16px', borderRadius: '100px', border: '1px solid rgba(201,168,76,0.4)', marginBottom: '16px' }}>{t('enroll_badge')}</span>
+            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(28px,3.8vw,44px)', fontWeight: 900, color: '#0B1F3A', marginBottom: '12px' }}>{t('enroll_title')}</h2>
+            <p style={{ fontSize: '16px', color: '#6F6F6F', maxWidth: '660px', margin: '0 auto', lineHeight: 1.75 }}>{t('enroll_desc')}</p>
           </div>
 
           <div className="enroll-form-wrap">
@@ -324,44 +354,44 @@ export default function LandingPage({ navigate }) {
               <>
                 <div className="enroll-form-row">
                   <div className="enroll-form-group">
-                    <label>Full Name</label>
-                    <input style={inputStyle('name')} type="text" placeholder="Your full name" value={enroll.name} onChange={e => updateEnroll('name', e.target.value)} />
+                    <label>{t('form_fullname')}</label>
+                    <input style={inputStyle('name')} type="text" placeholder={t('form_fullname_ph')} value={enroll.name} onChange={e => updateEnroll('name', e.target.value)} />
                   </div>
                   <div className="enroll-form-group">
-                    <label>Mobile Number</label>
-                    <input style={inputStyle('phone')} type="tel" placeholder="+91 98765 43210" value={enroll.phone} onChange={e => updateEnroll('phone', e.target.value)} />
+                    <label>{t('form_mobile')}</label>
+                    <input style={inputStyle('phone')} type="tel" placeholder={t('form_mobile_ph')} value={enroll.phone} onChange={e => updateEnroll('phone', e.target.value)} />
                   </div>
                 </div>
                 <div className="enroll-form-row">
                   <div className="enroll-form-group">
-                    <label>Email Address</label>
-                    <input style={inputStyle('email')} type="email" placeholder="you@example.com" value={enroll.email} onChange={e => updateEnroll('email', e.target.value)} />
+                    <label>{t('form_email')}</label>
+                    <input style={inputStyle('email')} type="email" placeholder={t('form_email_ph')} value={enroll.email} onChange={e => updateEnroll('email', e.target.value)} />
                   </div>
                   <div className="enroll-form-group">
-                    <label>Preferred Course</label>
+                    <label>{t('form_course_label')}</label>
                     <select style={inputStyle('course')} value={enroll.course} onChange={e => updateEnroll('course', e.target.value)}>
-                      <option value="">Select a course</option>
-                      <option>Two Wheeler Training</option>
-                      <option>Four Wheeler Training</option>
-                      <option>RTO Licence Package</option>
-                      <option>Ladies Program Enrollment</option>
+                      <option value="">{t('form_course_select')}</option>
+                      <option>{t('form_course_opt1')}</option>
+                      <option>{t('form_course_opt2')}</option>
+                      <option>{t('form_course_opt3')}</option>
+                      <option>{t('form_course_opt4')}</option>
                     </select>
                   </div>
                 </div>
                 <div className="enroll-form-row single">
                   <div className="enroll-form-group">
-                    <label>Comments / Preferred Timing</label>
-                    <textarea style={inputStyle('notes')} placeholder="Tell us your preferred batch, area, or any questions." value={enroll.notes || ''} onChange={e => updateEnroll('notes', e.target.value)} />
+                    <label>{t('form_comments_label')}</label>
+                    <textarea style={inputStyle('notes')} placeholder={t('form_comments_ph')} value={enroll.notes || ''} onChange={e => updateEnroll('notes', e.target.value)} />
                   </div>
                 </div>
-                <button className="enroll-submit-btn" onClick={submitEnroll}>Submit Enrollment Request</button>
+                <button className="enroll-submit-btn" onClick={submitEnroll}>{t('submit_request')}</button>
               </>
             ) : (
               <div className="enroll-success">
                 <div style={{ fontSize: '44px', marginBottom: '18px' }}>✅</div>
-                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '28px', color: '#0B1F3A', marginBottom: '12px' }}>Thank you! Your enrollment request is sent.</h3>
-                <p style={{ fontSize: '15px', color: '#5A5A5A', lineHeight: 1.8, marginBottom: '24px' }}>One of our team members will contact you shortly to confirm the details and schedule your first session.</p>
-                <button className="btn-navy" onClick={() => navigate('landing')}>Back to Home</button>
+                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '28px', color: '#0B1F3A', marginBottom: '12px' }}>{t('form_success_title')}</h3>
+                <p style={{ fontSize: '15px', color: '#5A5A5A', lineHeight: 1.8, marginBottom: '24px' }}>{t('form_success_desc')}</p>
+                <button className="btn-navy" onClick={() => navigate('landing')}>{t('back_to_home')}</button>
               </div>
             )}
           </div>

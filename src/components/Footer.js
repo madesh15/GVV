@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
  
 const s = {
   footer: { background: '#1A1A18', color: 'rgba(255,255,255,0.55)', padding: '56px 5% 28px' },
@@ -32,6 +33,8 @@ const s = {
 
 export default function Footer({ navigate, variant = 'default' }) {
   const isLadies = variant === 'ladies';
+  const { t } = useLanguage();
+
   return (
     <footer style={s.footer}>
       <div style={s.inner}>
@@ -39,36 +42,39 @@ export default function Footer({ navigate, variant = 'default' }) {
           <div>
             <div style={s.logo}>GVV</div>
             <p style={s.brandP}>
-              {isLadies
-                ? 'GVV Driving School — proud home of the Ladies Teaches Ladies program. Empowering women drivers since 2009.'
-                : "GVV Driving School — Chennai's premier government-approved driving institution. Empowering safe, confident drivers since 2009."}
+              {isLadies ? t('footer_desc_ladies') : t('footer_desc_default')}
             </p>
-            <div style={s.badge}>✓ Government Approved · Reg. No: TN/DS/2005/0412</div>
           </div>
           <div>
-            <h4 style={s.colH4}>Pages</h4>
-            {[['landing','Home'],['courses','Courses'],['ladies','♀ Ladies Program'],['contact','Contact Us']].map(([k,l])=>(
-              <span key={k} style={s.colA} onClick={()=>navigate(k)}>{l}</span>
+            <h4 style={s.colH4}>{t('footer_col_pages')}</h4>
+            {[
+              ['landing', t('home')],
+              ['courses', t('courses')],
+              ['ladies', t('ladies_program')],
+              ['contact', t('contact_us')]
+            ].map(([k, l]) => (
+              <span key={k} style={s.colA} onClick={() => navigate(k)}>{l}</span>
             ))}
           </div>
           <div>
-            <h4 style={s.colH4}>{isLadies ? 'Ladies Enquiry' : 'Contact'}</h4>
+            <h4 style={s.colH4}>{isLadies ? t('footer_col_enquiry') : t('footer_col_contact')}</h4>
             <a href="tel:+919884772048" style={s.colA}>+91 9884772048</a>
-            <a href="tel:+919840067890" style={s.colA}>+91 9884770583 (Ladies)</a>
-            <a href="mailto:info@gvvdrivingschool.in" style={s.colA}>info@gvvdrivingschool.in</a>
+            <a href="https://wa.me/919884770583?text=Hi!%20I%20want%20to%20know%20more%20about%20the%20Ladies%20Driving%20Program." target="_blank" rel="noreferrer" style={s.colA}>+91 9884770583 (Ladies)</a>
+            <a href="mailto:info@gvvdrivingschool.in" style={s.colA}>Gvvds2009@gmail.com</a>
           </div>
           <div>
-            <h4 style={s.colH4}>Address</h4>
-            <span style={s.colA}>42, Anna Salai, Guindy</span>
-            <span style={s.colA}>Chennai – 600 032</span>
-            <span style={s.colA}>Tamil Nadu, India</span>
+            <h4 style={s.colH4}>{t('footer_col_addr')}</h4>
+            <span style={s.colA}>{t('footer_addr_line1')}</span>
+            <span style={s.colA}>{t('footer_addr_line2')}</span>
+            <span style={s.colA}>{t('footer_addr_line3')}</span>
           </div>
         </div>
         <div style={s.bottom}>
-          <span>© 2025 GVV Driving School. All rights reserved. Government Approved — Tamil Nadu.</span>
-          <span style={{ color: 'rgba(255,255,255,0.25)' }}>Crafted with ♥ for Safe Drivers</span>
+          <span>{t('footer_copyright')}</span>
+          <span style={{ color: 'rgba(255,255,255,0.25)' }}>{t('footer_crafted')}</span>
         </div>
       </div>
     </footer>
   );
 }
+

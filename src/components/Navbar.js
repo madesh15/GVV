@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const styles = {
   nav: {
@@ -45,16 +46,17 @@ const styles = {
 
 export default function Navbar({ currentPage, navigate, activeSection }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { lang, toggleLang, t } = useLanguage();
 
   const links = [
-    { key: 'landing', label: 'Home' },
-    { key: 'courses', label: 'Courses' },
-    { key: 'reviews', label: 'Reviews' },
-    { key: 'ladies', label: '♀ Ladies Program' },
-    { key: 'contact', label: 'Contact Us' },
+    { key: 'landing', label: t('home') },
+    { key: 'courses', label: t('courses') },
+    { key: 'reviews', label: t('reviews') },
+    { key: 'ladies', label: t('ladies_program') },
+    { key: 'contact', label: t('contact_us') },
   ];
 
-  const activeKey = currentPage === 'landing' ? (activeSection || 'landing') : currentPage;
+  const activeKey = (currentPage === 'landing' || currentPage === 'reviews' || currentPage === 'enroll') ? (activeSection || 'landing') : currentPage;
   const linkStyle = (key) => ({
     color: activeKey === key ? '#C9A84C' : 'rgba(255,255,255,0.78)',
     textDecoration: 'none', fontSize: '13.5px', fontWeight: 500,
@@ -70,6 +72,20 @@ export default function Navbar({ currentPage, navigate, activeSection }) {
     transition: 'all .2s',
   };
 
+  const langBtnStyle = {
+    background: 'transparent',
+    color: '#C9A84C',
+    border: '1.5px solid #C9A84C',
+    fontWeight: 700,
+    fontSize: '12px',
+    padding: '8px 14px',
+    borderRadius: '8px',
+    marginLeft: '12px',
+    cursor: 'pointer',
+    fontFamily: "'DM Sans',sans-serif",
+    transition: 'all .2s',
+  };
+
   const go = (key) => { navigate(key); setMobileOpen(false); };
 
   return (
@@ -77,8 +93,8 @@ export default function Navbar({ currentPage, navigate, activeSection }) {
       <div style={styles.brand} onClick={() => go('landing')}>
         <div style={styles.logo}>GVV</div>
         <div style={styles.titleWrap}>
-          <span style={styles.titleMain}>GVV Driving School</span>
-          <span style={styles.titleSub}>Government Approved · Est. 2009</span>
+          <span className="nav-brand-main" style={styles.titleMain}>{t('gvv_driving_school')}</span>
+          <span className="nav-brand-sub" style={styles.titleSub}>{t('gov_approved')}</span>
         </div>
       </div>
 
@@ -86,17 +102,24 @@ export default function Navbar({ currentPage, navigate, activeSection }) {
       <div style={styles.center} className="nav-desktop">
         <div style={styles.links}>
           {links.map(l => (
-            <span key={l.key} style={linkStyle(l.key)} onClick={() => go(l.key)}>{l.label}</span>
+            <span key={l.key} className="nav-link" style={linkStyle(l.key)} onClick={() => go(l.key)}>{l.label}</span>
           ))}
         </div>
       </div>
       <div style={styles.ctaWrap} className="nav-desktop">
-        <span style={ctaStyle} onClick={() => go('enroll')}>Enroll Now →</span>
+        <span className="nav-cta" style={ctaStyle} onClick={() => go('enroll')}>{t('enroll_now')}</span>
+        <button className="lang-toggle-btn" style={langBtnStyle} onClick={toggleLang}>
+          🌐 {lang === 'en' ? 'தமிழ்' : 'English'}
+        </button>
       </div>
       <style>{`
         @media(max-width:900px){
           .nav-desktop { display: none !important; }
           .nav-hamburger { display: flex !important; }
+        }
+        .lang-toggle-btn:hover {
+          background: #C9A84C !important;
+          color: #0B1F3A !important;
         }
       `}</style>
 
@@ -122,7 +145,22 @@ export default function Navbar({ currentPage, navigate, activeSection }) {
           {links.map(l => (
             <span key={l.key} style={{ ...linkStyle(l.key), padding: '12px 16px' }} onClick={() => go(l.key)}>{l.label}</span>
           ))}
-          <span style={{ ...ctaStyle, marginLeft: 0, marginTop: '8px', textAlign: 'center', padding: '12px 16px' }} onClick={() => go('enroll')}>Enroll Now →</span>
+          <span style={{ ...ctaStyle, marginLeft: 0, marginTop: '8px', textAlign: 'center', padding: '12px 16px' }} onClick={() => go('enroll')}>{t('enroll_now')}</span>
+          <button 
+            className="lang-toggle-btn"
+            style={{ 
+              ...langBtnStyle, 
+              marginLeft: 0, 
+              marginTop: '12px', 
+              padding: '12px 16px', 
+              fontSize: '13.5px',
+              textAlign: 'center',
+              background: 'rgba(201,168,76,0.1)'
+            }} 
+            onClick={() => { toggleLang(); setMobileOpen(false); }}
+          >
+            🌐 {lang === 'en' ? 'தமிழ்' : 'English'}
+          </button>
         </div>
       )}
     </nav>

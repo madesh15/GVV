@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import InnerPageHero from '../components/InnerPageHero';
 import Footer from '../components/Footer';
+import { useLanguage } from '../context/LanguageContext';
 
 const css = `
 .contact-card { background: #fff; border: 1px solid #E8E8E0; border-radius: 18px; padding: 32px; margin-bottom: 20px; }
@@ -31,12 +32,27 @@ const css = `
 @media(max-width:600px){
   .form-row-contact { grid-template-columns: 1fr !important; }
 }
+.map-container-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important;
+  border-color: rgba(201,168,76,0.4) !important;
+}
+.map-container-link:hover .map-overlay {
+  background: rgba(11,31,58,0.45) !important;
+  backdrop-filter: blur(2px);
+}
+.map-container-link:hover .map-badge {
+  background: #fff !important;
+  color: #0B1F3A !important;
+  transform: scale(1.05);
+}
 `;
 
 export default function ContactPage({ navigate }) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', type: '', msg: '' });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const { t } = useLanguage();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -68,12 +84,30 @@ export default function ContactPage({ navigate }) {
     outline: 'none', appearance: 'none',
   });
 
+  const contactRows = [
+    { icon: '📍', labelKey: 'contact_lbl_addr', content: t('footer_addr_line1') + ', Chennai-600092, Tamil Nadu' },
+    { icon: '📞', labelKey: 'contact_lbl_phone', content: null },
+    { icon: '📧', labelKey: 'contact_lbl_email', content: null },
+    { icon: '🕐', labelKey: 'contact_lbl_hours', content: t('contact_hours_val') },
+  ];
+
+  const scheduleRows = [
+    [t('contact_sched_batch1'), '6:00 AM – 8:00 PM', 'open'],
+    [t('contact_sched_batch2'), '6:00 AM – 7:00 PM', 'open'],
+    [t('contact_sched_batch3'), t('contact_sched_holiday'), 'closed'],
+    [t('contact_sched_batch4'), t('contact_sched_closed'), 'closed'],
+    [t('contact_sched_batch5'), '7:00 AM – 9:00 AM', 'open'],
+    [t('contact_sched_batch6'), '6:00 PM – 8:00 PM', 'open'],
+  ];
+
   return (
     <div ref={ref}>
       <style>{css}</style>
       <InnerPageHero
-        breadcrumb="Contact Us" title="Contact" titleEm="Us"
-        subtitle="We're here to answer every question about courses, enrollments, schedules, and our special ladies program. Reach us anytime."
+        breadcrumb={t('contact_hero_bread')}
+        title={t('contact_hero_title')}
+        titleEm={t('contact_hero_title_em')}
+        subtitle={t('contact_hero_subtitle')}
         navigate={navigate}
       />
       <div style={{ maxWidth: '1160px', margin: '0 auto', padding: '60px 5% 80px' }}>
@@ -83,29 +117,26 @@ export default function ContactPage({ navigate }) {
           <div>
             {/* Contact Info */}
             <div className="contact-card reveal">
-              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '22px' }}>GVV Driving School — Chennai</h3>
-              {[
-                { icon: '📍', label: 'Address', content: 'No 6, Sai Nagar, 6th Street, Virugambakkam, Chennai-600092, Tamil Nadu' },
-                { icon: '📞', label: 'Phone Numbers', content: null },
-                { icon: '📧', label: 'Email', content: null },
-                { icon: '🕐', label: 'Working Hours', content: 'Mon–Sat: 6:00 AM – 8:00 PM\nSunday: 7:00 AM – 1:00 PM' },
-              ].map((row, i) => (
+              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '22px' }}>{t('contact_title')}</h3>
+              {contactRows.map((row, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: i < 3 ? '20px' : 0 }}>
                   <div style={{ width: '42px', height: '42px', background: '#0B1F3A', borderRadius: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '17px', flexShrink: 0 }}>{row.icon}</div>
                   <div>
-                    <div style={{ fontSize: '11.5px', color: '#BBBBB0', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>{row.label}</div>
-                    {row.label === 'Phone Numbers' ? (
+                    <div style={{ fontSize: '11.5px', color: '#BBBBB0', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>{t(row.labelKey)}</div>
+                    {row.labelKey === 'contact_lbl_phone' ? (
                       <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>
-                        <a href="tel:+919884772048" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>+91 9884772048 — General</a>
-                        <a href="tel:+919884770583" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>+91 9884770583 — Ladies Enquiry</a>
+                        <a href="tel:+919884772048" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>+91 9884772048 {t('contact_phone_general')}</a>
+                        <a href="https://wa.me/919884770583?text=Hi!%20I%20want%20to%20know%20more%20about%20the%20Ladies%20Driving%20Program." target="_blank" rel="noreferrer" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>+91 9884770583 {t('contact_phone_ladies')} (WhatsApp)</a>
                       </p>
-                    ) : row.label === 'Email' ? (
+                    ) : row.labelKey === 'contact_lbl_email' ? (
                       <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>
-                        <a href="mailto:info@gvvdrivingschool.in" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>[Gvvds2009@gmail.com]</a>
-                        <a href="mailto:ladies@gvvdrivingschool.in" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>[Gvvds2009@gmail.com]</a>
+                        <a href="mailto:Gvvds2009@gmail.com" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>Gvvds2009@gmail.com</a>
+                        <a href="mailto:Gvvds2009@gmail.com" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>Gvvds2009@gmail.com</a>
                       </p>
                     ) : (
-                      <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>{row.content.split('\n').map((l, j) => <span key={j} style={{ display: 'block' }}>{l}</span>)}</p>
+                      <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>
+                        {row.content.split('\n').map((l, j) => <span key={j} style={{ display: 'block' }}>{l}</span>)}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -114,15 +145,8 @@ export default function ContactPage({ navigate }) {
 
             {/* Hours */}
             <div className="hours-card reveal">
-              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '20px' }}>Training Schedule</h3>
-              {[
-                ['Monday – Friday','6:00 AM – 8:00 PM','open'],
-                ['Saturday','6:00 AM – 7:00 PM','open'],
-                ['Sunday','7:00 AM – 1:00 PM','open'],
-                ['Public Holidays','Closed','closed'],
-                ['♀ Ladies Morning Batch','7:00 AM – 9:00 AM','open'],
-                ['♀ Ladies Evening Batch','6:00 PM – 8:00 PM','open'],
-              ].map(([day, time, status]) => (
+              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '20px' }}>{t('contact_sched_title')}</h3>
+              {scheduleRows.map(([day, time, status]) => (
                 <div className="hours-row" key={day}>
                   <span style={{ color: '#888880' }}>{day}</span>
                   <span style={{ color: status === 'open' ? '#1A6B3C' : '#C0392B', fontWeight: 600 }}>{time}</span>
@@ -134,86 +158,131 @@ export default function ContactPage({ navigate }) {
             <a href="https://wa.me/919884772048?text=Hi!%20I%20want%20to%20know%20more%20about%20GVV%20Driving%20School." className="whatsapp-box reveal" target="_blank" rel="noreferrer">
               <div style={{ fontSize: '32px', flexShrink: 0 }}>💬</div>
               <div>
-                <h4 style={{ color: '#fff', fontSize: '16px', fontWeight: 700, marginBottom: '3px' }}>Chat on WhatsApp</h4>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>+91 9884772048 · Replies within 15 mins</p>
+                <h4 style={{ color: '#fff', fontSize: '16px', fontWeight: 700, marginBottom: '3px' }}>{t('contact_whatsapp_title')}</h4>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>{t('contact_whatsapp_desc')}</p>
               </div>
             </a>
 
             {/* Ladies line */}
             <div className="reveal" style={{ background: 'linear-gradient(135deg,#2A0818,#430E28)', borderRadius: '16px', padding: '24px', marginBottom: '20px' }}>
-              <h4 style={{ color: '#FF9ED4', fontSize: '15px', fontWeight: 700, marginBottom: '6px' }}>♀ Ladies Dedicated Enquiry Line</h4>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13.5px', marginBottom: '12px' }}>For women's program enquiries, speak directly to our ladies enrollment team:</p>
+              <h4 style={{ color: '#FF9ED4', fontSize: '15px', fontWeight: 700, marginBottom: '6px' }}>{t('contact_ladies_line_title')}</h4>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13.5px', marginBottom: '12px' }}>{t('contact_ladies_line_desc')}</p>
               <div style={{ color: '#fff', fontSize: '18px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ flexShrink: 0 }}>📞</span>
-                <a href="tel:+919884770583" style={{ color: '#fff', textDecoration: 'none' }}>+91 9884770583</a>
+                <span style={{ flexShrink: 0 }}>💬</span>
+                <a href="https://wa.me/919884770583?text=Hi!%20I%20want%20to%20know%20more%20about%20the%20Ladies%20Driving%20Program." target="_blank" rel="noreferrer" style={{ color: '#fff', textDecoration: 'none' }}>+91 9884770583</a>
               </div>
             </div>
 
-            {/* Govt reg */}
-            <div className="reveal" style={{ background: '#E8F5EE', border: '1px solid rgba(26,107,60,0.3)', borderRadius: '14px', padding: '20px 22px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-              <div style={{ fontSize: '32px', flexShrink: 0 }}>🏛️</div>
-              <div>
-                <h4 style={{ fontSize: '11px', fontWeight: 700, color: '#1A6B3C', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '5px' }}>Government Registration</h4>
-                <p style={{ fontSize: '14.5px', fontWeight: 700, color: '#0B1F3A' }}>Reg. No: TN/DS/2005/0412</p>
-                <span style={{ fontSize: '11.5px', color: '#888880', display: 'block', marginTop: '2px' }}>Tamil Nadu Regional Transport Authority, Chennai</span>
-              </div>
-            </div>
+            {/* Map Card */}
+            <div className="reveal" style={{ marginBottom: '20px' }}>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=GVV+Driving+School+Virugambakkam+Chennai"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'block',
+                  position: 'relative',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  height: '240px',
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
+                  border: '1px solid rgba(11,31,58,0.1)',
+                  transition: 'all 0.3s ease',
+                  textDecoration: 'none'
+                }}
+                className="map-container-link"
+              >
+                <iframe
+                  title="GVV Driving School Location"
+                  src="https://maps.google.com/maps?q=GVV%20Driving%20School,%20Virugambakkam,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, pointerEvents: 'none' }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
 
-            {/* Map placeholder */}
-            <div className="reveal" style={{ background: '#0B1F3A', borderRadius: '16px', height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '10px', color: '#C9A84C' }}>
-              <span style={{ fontSize: '40px' }}>📍</span>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>GVV Driving School — Virugambakkam, Chennai</p>
+                <div
+                  style={{
+                    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                    background: 'linear-gradient(to top, rgba(11,31,58,0.85) 0%, rgba(11,31,58,0.1) 60%)',
+                    display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+                    padding: '16px 20px', transition: 'all 0.3s ease',
+                  }}
+                  className="map-overlay"
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                    <div>
+                      <p style={{ margin: 0, fontSize: '11px', color: '#C9A84C', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{t('contact_map_lbl')}</p>
+                      <h4 style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#fff', fontWeight: 600 }}>{t('contact_map_placeholder')}</h4>
+                    </div>
+                    <span
+                      className="map-badge"
+                      style={{
+                        background: '#C9A84C', color: '#0B1F3A', padding: '6px 12px',
+                        borderRadius: '30px', fontSize: '11px', fontWeight: 700,
+                        display: 'flex', alignItems: 'center', gap: '4px',
+                        boxShadow: '0 4px 12px rgba(201,168,76,0.3)',
+                        transition: 'all 0.3s ease', marginLeft: 'auto'
+                      }}
+                    >
+                      {t('contact_map_badge')}
+                    </span>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
 
           {/* RIGHT COLUMN: Form */}
           <div>
             <div className="contact-form-card reveal">
-              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '6px' }}>Send Us a Message</h3>
-              <p style={{ fontSize: '13.5px', color: '#888880', marginBottom: '24px' }}>Fill in the form below and we'll get back to you within a few hours.</p>
+              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '6px' }}>{t('contact_form_title')}</h3>
+              <p style={{ fontSize: '13.5px', color: '#888880', marginBottom: '24px' }}>{t('contact_form_desc')}</p>
 
               <div className="form-row-contact" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 <div className="form-group-light">
-                  <label>Full Name</label>
-                  <input style={iStyle('name')} type="text" placeholder="Your name" value={form.name} onChange={e => update('name', e.target.value)} />
+                  <label>{t('form_fullname')}</label>
+                  <input style={iStyle('name')} type="text" placeholder={t('form_fullname_ph')} value={form.name} onChange={e => update('name', e.target.value)} />
                 </div>
                 <div className="form-group-light">
-                  <label>Phone Number</label>
+                  <label>{t('contact_form_phone')}</label>
                   <input style={iStyle('phone')} type="tel" placeholder="+91 98765 43210" value={form.phone} onChange={e => update('phone', e.target.value)} />
                 </div>
               </div>
               <div className="form-row-contact" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 <div className="form-group-light">
-                  <label>Email Address</label>
+                  <label>{t('contact_form_email')}</label>
                   <input style={iStyle('email')} type="email" placeholder="your@email.com" value={form.email} onChange={e => update('email', e.target.value)} />
                 </div>
                 <div className="form-group-light">
-                  <label>Enquiry Type</label>
+                  <label>{t('contact_form_type')}</label>
                   <select style={iStyle('type')} value={form.type} onChange={e => update('type', e.target.value)}>
-                    <option value="">— Select Type —</option>
-                    <option>General Course Enquiry</option>
-                    <option>♀ Ladies Program Enquiry</option>
-                    <option>Fee &amp; Payment Enquiry</option>
-                    <option>RTO Licence Help</option>
-                    <option>Schedule &amp; Batch Timing</option>
-                    <option>Other</option>
+                    <option value="">{t('contact_form_type_select')}</option>
+                    <option>{t('contact_form_type_opt1')}</option>
+                    <option>{t('contact_form_type_opt2')}</option>
+                    <option>{t('contact_form_type_opt3')}</option>
+                    <option>{t('contact_form_type_opt4')}</option>
+                    <option>{t('contact_form_type_opt5')}</option>
+                    <option>{t('contact_form_type_opt6')}</option>
                   </select>
                 </div>
               </div>
               <div className="form-group-light" style={{ marginBottom: '16px' }}>
-                <label>Your Message</label>
-                <textarea style={iStyle('msg')} placeholder="Write your question or message here…" value={form.msg} onChange={e => update('msg', e.target.value)} />
+                <label>{t('contact_form_msg')}</label>
+                <textarea style={iStyle('msg')} placeholder={t('contact_form_msg_ph')} value={form.msg} onChange={e => update('msg', e.target.value)} />
               </div>
 
               <button className="btn-submit-contact" onClick={submit} disabled={submitted}>
-                {submitted ? 'Sent ✓' : 'Send Message →'}
+                {submitted ? t('contact_form_submit_sent') : t('contact_form_submit')}
               </button>
 
               {submitted && (
                 <div style={{ background: '#E8F5EE', border: '1px solid rgba(26,107,60,0.3)', borderRadius: '16px', padding: '30px', textAlign: 'center', marginTop: '20px' }}>
                   <div style={{ fontSize: '40px', marginBottom: '12px' }}>✅</div>
-                  <h3 style={{ color: '#0B1F3A', fontFamily: "'Playfair Display',serif", fontSize: '22px', marginBottom: '8px' }}>Message Sent!</h3>
-                  <p style={{ color: '#444440', fontSize: '14px' }}>We'll get back to you within a few hours. Thank you for reaching out to GVV Driving School.</p>
+                  <h3 style={{ color: '#0B1F3A', fontFamily: "'Playfair Display',serif", fontSize: '22px', marginBottom: '8px' }}>{t('contact_form_success_title')}</h3>
+                  <p style={{ color: '#444440', fontSize: '14px' }}>{t('contact_form_success_desc')}</p>
                 </div>
               )}
             </div>

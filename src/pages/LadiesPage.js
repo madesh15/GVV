@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Footer from '../components/Footer';
+import { useLanguage } from '../context/LanguageContext';
 
 const css = `
 .lf-card { background: rgba(214,51,132,0.06); border: 1px solid rgba(214,51,132,0.18); border-radius: 16px; padding: 28px; }
@@ -33,18 +34,18 @@ const css = `
 `;
 
 const features = [
-  { icon: '👩‍🏫', title: 'Certified Female Instructors Only', text: 'Every women\'s session — without exception — is conducted by our government-certified female driving instructors. No male instructors in ladies batches.' },
-  { icon: '🛡️', title: 'Private & Safe Batches', text: 'Dedicated ladies-only time slots on routes chosen for comfort and privacy. No mixed sessions.' },
-  { icon: '⏰', title: 'Ladies-Only Flexible Timings', text: 'Special morning (7–9 AM) and evening (6–8 PM) batches designed around your family schedule and daily routine.' },
-  { icon: '📋', title: 'End-to-End RTO Support', text: "From learner's licence prep to permanent licence — our team accompanies and assists women students at every step of the RTO process." },
-  { icon: '🌸', title: 'Zero Discomfort Guarantee', text: 'If you ever feel uncomfortable for any reason, reschedule freely. No questions asked, full flexibility — because your comfort matters most.' },
-  { icon: '📱', title: "Women Learners' WhatsApp Group", text: 'Join our active community of women learners for tips, schedule updates, peer support, and encouragement throughout your journey.' },
+  { icon: '👩‍🏫', titleKey: 'ladies_feat_1_title', textKey: 'ladies_feat_1_desc' },
+  { icon: '🛡️', titleKey: 'ladies_feat_2_title', textKey: 'ladies_feat_2_desc' },
+  { icon: '⏰', titleKey: 'ladies_feat_3_title', textKey: 'ladies_feat_3_desc' },
+  { icon: '📋', titleKey: 'ladies_feat_4_title', textKey: 'ladies_feat_4_desc' },
+  { icon: '🌸', titleKey: 'ladies_feat_5_title', textKey: 'ladies_feat_5_desc' },
 ];
 
 export default function LadiesPage({ navigate }) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', dob: '', course: '', batch: '', area: '', agree: false });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const { lang, t } = useLanguage();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -84,39 +85,45 @@ export default function LadiesPage({ navigate }) {
       <div style={{ background: 'linear-gradient(135deg,#280715 0%,#420C26 55%,#280715 100%)', padding: '70px 5% 60px', position: 'relative', overflow: 'hidden', marginTop: '72px' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 80% 50%,rgba(214,51,132,0.1),transparent 60%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: '1160px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginBottom: '14px', cursor: 'pointer' }} onClick={() => navigate('landing')}>← Home / Ladies Program</div>
+          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginBottom: '14px', cursor: 'pointer' }} onClick={() => navigate('landing')}>
+            ← {t('home')} / {t('ladies_hero_bread')}
+          </div>
           <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(32px,4vw,54px)', fontWeight: 900, color: '#fff', marginBottom: '12px', lineHeight: 1.1 }}>
-            Ladies <em style={{ color: '#FF6BB0', fontStyle: 'italic' }}>Teaches</em> Ladies
+            {t('ladies_hero_title')}<em style={{ color: '#FF6BB0', fontStyle: 'italic' }}>{t('ladies_hero_title_em')}</em>{t('ladies_hero_title_end')}
           </h1>
-          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.65)', maxWidth: '600px', lineHeight: 1.7 }}>Chennai's most trusted exclusive women's driving program — certified female instructors, private batches, and a safe, empowering learning experience.</p>
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.65)', maxWidth: '600px', lineHeight: 1.7 }}>{t('ladies_hero_subtitle')}</p>
         </div>
       </div>
 
       <div style={{ maxWidth: '1160px', margin: '0 auto', padding: '60px 5% 80px' }}>
         {/* Stats */}
         <div className="ladies-stats-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: '20px', marginBottom: '60px' }}>
-          {[['4,200+','Women licensed through GVV'],['98%','First-attempt pass rate for women'],['6+','Certified female instructors'],['2005','Ladies program since']].map(([n,l])=>(
+          {[
+            ['4,200+', t('ladies_stat_1')],
+            ['99%', t('ladies_stat_2')],
+            ['2009', t('ladies_stat_3')]
+          ].map(([n, l]) => (
             <div key={l} className="reveal" style={{ background: 'linear-gradient(135deg,#2A0818,#430E28)', borderRadius: '16px', padding: '28px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '52px', color: '#FF6BB0', lineHeight: 1 }}>{n}</div>
-              <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13px', marginTop: '6px' }}>{l}</div>
+              <div className="ladies-stat-val" style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '52px', color: '#FF6BB0', lineHeight: 1 }}>{n}</div>
+              <div className="ladies-stat-lbl" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13px', marginTop: '6px' }}>{l}</div>
             </div>
           ))}
         </div>
 
         {/* Features header */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }} className="reveal">
-          <span style={{ display: 'inline-block', background: 'rgba(214,51,132,0.1)', color: '#C01070', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(214,51,132,0.3)', marginBottom: '14px' }}>Why Our Ladies Program</span>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.2vw,38px)', fontWeight: 900, color: '#0B1F3A', marginBottom: '10px' }}>Everything Designed for Women</h2>
-          <p style={{ fontSize: '16px', color: '#888880', maxWidth: '500px', margin: '0 auto', lineHeight: 1.7 }}>A safe, private, and empowering environment where women learn from women.</p>
+          <span style={{ display: 'inline-block', background: 'rgba(214,51,132,0.1)', color: '#C01070', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', padding: '7px 15px', borderRadius: '100px', border: '1px solid rgba(214,51,132,0.3)', marginBottom: '14px' }}>{t('ladies_why_badge')}</span>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(26px,3.2vw,38px)', fontWeight: 900, color: '#0B1F3A', marginBottom: '10px' }}>{t('ladies_why_title')}</h2>
+          <p style={{ fontSize: '16px', color: '#888880', maxWidth: '500px', margin: '0 auto', lineHeight: 1.7 }}>{t('ladies_why_desc')}</p>
         </div>
 
         {/* Features grid */}
         <div className="ladies-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '20px', marginBottom: '60px' }}>
           {features.map(f => (
-            <div key={f.title} className="lf-card reveal">
+            <div key={f.titleKey} className="lf-card reveal">
               <div style={{ fontSize: '32px', marginBottom: '16px' }}>{f.icon}</div>
-              <h3 style={{ color: '#C01070', fontSize: '17px', fontWeight: 700, marginBottom: '10px' }}>{f.title}</h3>
-              <p style={{ color: '#444440', fontSize: '14px', lineHeight: 1.7 }}>{f.text}</p>
+              <h3 style={{ color: '#C01070', fontSize: '17px', fontWeight: 700, marginBottom: '10px' }}>{t(f.titleKey)}</h3>
+              <p style={{ color: '#444440', fontSize: '14px', lineHeight: 1.7 }}>{t(f.textKey)}</p>
             </div>
           ))}
         </div>
@@ -125,68 +132,68 @@ export default function LadiesPage({ navigate }) {
         <div style={{ marginTop: '20px' }}>
           {!submitted ? (
             <div className="ladies-form-wrap">
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '28px', color: '#fff', marginBottom: '6px' }}>♀ Enroll in Ladies Program</h2>
-              <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14.5px', marginBottom: '32px' }}>Fill in your details and our ladies team will call you within 24 hours to confirm your batch.</p>
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '28px', color: '#fff', marginBottom: '6px' }}>{t('ladies_form_title')}</h2>
+              <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14.5px', marginBottom: '32px' }}>{t('ladies_form_desc')}</p>
 
               <div className="form-row-ladies" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px', marginBottom: '18px' }}>
                 <div className="form-group">
-                  <label>Full Name</label>
-                  <input style={inputStyle('name')} type="text" placeholder="Your full name" value={form.name} onChange={e => update('name', e.target.value)} />
+                  <label>{t('form_fullname')}</label>
+                  <input style={inputStyle('name')} type="text" placeholder={t('form_fullname_ph')} value={form.name} onChange={e => update('name', e.target.value)} />
                 </div>
                 <div className="form-group">
-                  <label>Mobile Number</label>
-                  <input style={inputStyle('phone')} type="tel" placeholder="+91 98765 43210" value={form.phone} onChange={e => update('phone', e.target.value)} />
+                  <label>{t('form_mobile')}</label>
+                  <input style={inputStyle('phone')} type="tel" placeholder={t('form_mobile_ph')} value={form.phone} onChange={e => update('phone', e.target.value)} />
                 </div>
               </div>
               <div className="form-row-ladies" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px', marginBottom: '18px' }}>
                 <div className="form-group">
-                  <label>Email Address</label>
+                  <label>{t('form_email_ph')}</label>
                   <input style={inputStyle('email')} type="email" placeholder="your@email.com" value={form.email} onChange={e => update('email', e.target.value)} />
                 </div>
                 <div className="form-group">
-                  <label>Date of Birth</label>
+                  <label>{t('ladies_form_dob')}</label>
                   <input style={inputStyle('dob')} type="date" value={form.dob} onChange={e => update('dob', e.target.value)} />
                 </div>
               </div>
               <div className="form-row-ladies" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px', marginBottom: '18px' }}>
                 <div className="form-group">
-                  <label>Select Course</label>
+                  <label>{t('ladies_form_course')}</label>
                   <select style={inputStyle('course')} value={form.course} onChange={e => update('course', e.target.value)}>
-                    <option value="">— Choose a Course —</option>
-                    <option>♀ Ladies Exclusive Four Wheeler</option>
-                    <option>♀ Ladies Two Wheeler / Scooter</option>
-                    <option>♀ Full RTO Package (Ladies)</option>
+                    <option value="">{t('ladies_form_course_select')}</option>
+                    <option>{t('ladies_form_course_opt1')}</option>
+                    <option>{t('ladies_form_course_opt2')}</option>
+                    <option>{t('ladies_form_course_opt3')}</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Preferred Batch Time</label>
+                  <label>{t('ladies_form_batch')}</label>
                   <select style={inputStyle('batch')} value={form.batch} onChange={e => update('batch', e.target.value)}>
-                    <option value="">— Choose Timing —</option>
-                    <option>Morning Batch (7:00 AM – 9:00 AM)</option>
-                    <option>Morning Batch (9:00 AM – 11:00 AM)</option>
-                    <option>Evening Batch (6:00 PM – 8:00 PM)</option>
+                    <option value="">{t('ladies_form_batch_select')}</option>
+                    <option>{t('ladies_form_batch_opt1')}</option>
+                    <option>{t('ladies_form_batch_opt2')}</option>
+                    <option>{t('ladies_form_batch_opt3')}</option>
                   </select>
                 </div>
               </div>
               <div className="form-group" style={{ marginBottom: '18px' }}>
-                <label>Address / Area (Chennai)</label>
-                <input style={inputStyle('area')} type="text" placeholder="Your area or locality in Chennai" value={form.area} onChange={e => update('area', e.target.value)} />
+                <label>{t('ladies_form_area')}</label>
+                <input style={inputStyle('area')} type="text" placeholder={t('ladies_form_area_ph')} value={form.area} onChange={e => update('area', e.target.value)} />
               </div>
 
               <label className="ladies-agree">
                 <input type="checkbox" checked={form.agree} onChange={e => update('agree', e.target.checked)} style={{ border: errors.agree ? '1px solid #FF6BB0' : '' }} />
-                <span>I confirm I am enrolling for the <strong style={{ color: '#FF9ED4' }}>♀ Ladies Teaches Ladies Program</strong> and request a certified female instructor for all my driving sessions.</span>
+                <span>{t('enrolling_women_checkbox')}</span>
               </label>
 
-              <button className="btn-submit-ladies" onClick={submit}>♀ Submit Enrollment Application</button>
-              <p style={{ textAlign: 'center', fontSize: '11.5px', color: 'rgba(255,255,255,0.35)', marginTop: '14px' }}>🔒 Your data is 100% private and shared only with our ladies enrollment team.</p>
+              <button className="btn-submit-ladies" onClick={submit}>{t('submit_application')}</button>
+              <p style={{ textAlign: 'center', fontSize: '11.5px', color: 'rgba(255,255,255,0.35)', marginTop: '14px' }}>{t('data_private_lock')}</p>
             </div>
           ) : (
             <div style={{ background: 'linear-gradient(135deg,#2A0818,#430E28)', borderRadius: '24px', padding: '50px 20px', textAlign: 'center', maxWidth: '780px', margin: '0 auto' }}>
               <div style={{ fontSize: '60px', marginBottom: '16px' }}>🎉</div>
-              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '28px', color: '#fff', marginBottom: '10px' }}>Enrollment Received!</h3>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '16px', marginBottom: '30px' }}>Thank you! Our ladies team will call you within 24 hours to confirm your batch and instructor details.</p>
-              <button style={{ background: '#D63384', color: '#fff', fontWeight: 700, fontSize: '14px', padding: '13px 26px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: "'DM Sans',sans-serif" }} onClick={() => navigate('landing')}>← Back to Home</button>
+              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '28px', color: '#fff', marginBottom: '10px' }}>{t('ladies_form_success_title')}</h3>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '16px', marginBottom: '30px' }}>{t('ladies_form_success_desc')}</p>
+              <button style={{ background: '#D63384', color: '#fff', fontWeight: 700, fontSize: '14px', padding: '13px 26px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontFamily: "'DM Sans',sans-serif" }} onClick={() => navigate('landing')}>← {t('back_to_home')}</button>
             </div>
           )}
         </div>

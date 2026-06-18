@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import Navbar from './components/Navbar';
 import FloatingButtons from './components/FloatingButtons';
+import DraggableWhatsApp from './components/DraggableWhatsApp';
 import LandingPage from './pages/LandingPage';
 import CoursesPage from './pages/CoursesPage';
 import LadiesPage from './pages/LadiesPage';
 import ContactPage from './pages/ContactPage';
+import { LanguageProvider } from './context/LanguageContext';
 
 export default function App() {
   const [page, setPage] = useState('landing');
@@ -36,21 +38,24 @@ export default function App() {
       const y = window.scrollY;
       setScrollY(y);
 
-      if (page !== 'landing') return;
+      if (page !== 'landing' && page !== 'reviews' && page !== 'enroll') return;
 
       // determine which landing section should be highlighted
       const offset = 120; // account for fixed header height
       let found = 'landing';
+      let bestTop = -Infinity;
       const sections = [
-        { id: 'reviews-section', key: 'reviews' },
         { id: 'ladies-section', key: 'ladies' },
+        { id: 'reviews-section', key: 'reviews' },
         { id: 'enroll-section', key: 'enroll' },
       ];
       for (const s of sections) {
         const el = document.getElementById(s.id);
         if (!el) continue;
         const top = el.getBoundingClientRect().top - offset;
-        if (top <= 0) {
+        // Pick the section whose top is ≤ 0 and closest to 0 (most recently scrolled into)
+        if (top <= 0 && top > bestTop) {
+          bestTop = top;
           found = s.key;
         }
       }
@@ -64,13 +69,14 @@ export default function App() {
   }, [page]);
 
   return (
-    <>
+    <LanguageProvider>
       <Navbar currentPage={page} navigate={navigate} activeSection={activeSection} />
       {(page === 'landing' || page === 'reviews' || page === 'enroll') && <LandingPage navigate={navigate} />}
       {page === 'courses' && <CoursesPage navigate={navigate} />}
       {page === 'ladies' && <LadiesPage navigate={navigate} />}
       {page === 'contact' && <ContactPage navigate={navigate} />}
       <FloatingButtons navigate={navigate} scrollY={scrollY} />
-    </>
+      <DraggableWhatsApp />
+    </LanguageProvider>
   );
 }

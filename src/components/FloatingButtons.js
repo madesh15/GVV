@@ -1,6 +1,8 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function FloatingButtons({ navigate, scrollY }) {
+  const { t } = useLanguage();
   const visible = scrollY > 350;
 
   const wrap = {
@@ -21,9 +23,10 @@ export default function FloatingButtons({ navigate, scrollY }) {
   return (
     <div style={wrap}>
       <span style={{ ...base, background: '#D63384', color: '#fff', boxShadow: '0 6px 22px rgba(214,51,132,0.35)' }}
-        onClick={() => navigate('ladies')}>♀ Ladies Program</span>
+        onClick={() => navigate('ladies')}>{t('ladies_program_btn')}</span>
       <span style={{ ...base, background: '#C9A84C', color: '#0B1F3A', boxShadow: '0 6px 22px rgba(201,168,76,0.35)' }}
-        onClick={() => navigate('courses')}>View Courses →</span>
+        onClick={() => navigate('courses')}>{t('view_courses')}</span>
     </div>
   );
 }
+

@@ -1,6 +1,9 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function InnerPageHero({ breadcrumb, title, titleEm, subtitle, navigate, darkTheme = false }) {
+  const { t } = useLanguage();
+  
   const heroStyle = {
     background: darkTheme
       ? 'linear-gradient(135deg,#280715 0%,#420C26 55%,#280715 100%)'
@@ -14,7 +17,7 @@ export default function InnerPageHero({ breadcrumb, title, titleEm, subtitle, na
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 80% 50%,rgba(201,168,76,0.07),transparent 60%)', pointerEvents: 'none' }} />
       <div style={{ maxWidth: '1160px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ cursor: 'pointer', transition: 'color .2s' }} onClick={() => navigate('landing')}>← Home</span>
+          <span style={{ cursor: 'pointer', transition: 'color .2s' }} onClick={() => navigate('landing')}>← {t('home')}</span>
           <span>/ {breadcrumb}</span>
         </div>
         <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(32px,4vw,54px)', fontWeight: 900, color: '#fff', marginBottom: '12px', lineHeight: 1.1 }}>
@@ -25,3 +28,4 @@ export default function InnerPageHero({ breadcrumb, title, titleEm, subtitle, na
     </div>
   );
 }
+

@@ -50,3 +50,126 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--g100); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* WhatsApp floating button animations */
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 0 0 10px rgba(37, 211, 102, 0.25);
+  }
+  100% {
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  }
+}
+
+/* Tamil typography adjustments to fit layouts perfectly */
+html[lang="ta"] h1 {
+  font-size: clamp(34px, 4vw, 54px) !important;
+  line-height: 1.15 !important;
+}
+html[lang="ta"] h2 {
+  font-size: clamp(24px, 3vw, 38px) !important;
+  line-height: 1.25 !important;
+}
+html[lang="ta"] h3 {
+  font-size: clamp(16px, 2vw, 20px) !important;
+  line-height: 1.3 !important;
+}
+
+/* Component specific text reduction to keep grid designs intact */
+html[lang="ta"] .ticker-item {
+  font-size: 11.5px !important;
+}
+html[lang="ta"] .why-card h3 {
+  font-size: 15px !important;
+}
+html[lang="ta"] .why-card p {
+  font-size: 12.5px !important;
+}
+html[lang="ta"] .review-card p {
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+}
+html[lang="ta"] .review-card-name {
+  font-size: 12.5px !important;
+}
+html[lang="ta"] .review-card-tag {
+  font-size: 10.5px !important;
+}
+html[lang="ta"] .ls-mini h4 {
+  font-size: 12px !important;
+}
+html[lang="ta"] .ls-mini p {
+  font-size: 10.5px !important;
+}
+html[lang="ta"] .enroll-form-group label {
+  font-size: 12px !important;
+}
+html[lang="ta"] .enroll-form-group input, 
+html[lang="ta"] .enroll-form-group select, 
+html[lang="ta"] .enroll-form-group textarea {
+  font-size: 13px !important;
+}
+
+/* Navbar */
+html[lang="ta"] .nav-brand-main {
+  font-size: 15px !important;
+}
+html[lang="ta"] .nav-brand-sub {
+  font-size: 8.5px !important;
+}
+html[lang="ta"] .nav-link {
+  font-size: 12.5px !important;
+}
+html[lang="ta"] .nav-cta {
+  font-size: 12px !important;
+}
+
+/* Courses Page */
+html[lang="ta"] .filter-btn {
+  font-size: 12px !important;
+}
+html[lang="ta"] .course-card h3 {
+  font-size: 17px !important;
+}
+html[lang="ta"] .course-card p {
+  font-size: 12.5px !important;
+}
+html[lang="ta"] .course-price {
+  font-size: 24px !important;
+}
+html[lang="ta"] .course-dur {
+  font-size: 10.5px !important;
+}
+
+/* Ladies Page */
+html[lang="ta"] .form-group label {
+  font-size: 11.5px !important;
+}
+html[lang="ta"] .lf-card h3 {
+  font-size: 15.5px !important;
+}
+html[lang="ta"] .lf-card p {
+  font-size: 13px !important;
+}
+html[lang="ta"] .ladies-stat-val {
+  font-size: 44px !important;
+}
+html[lang="ta"] .ladies-stat-lbl {
+  font-size: 12px !important;
+}
+
+/* Contact Page */
+html[lang="ta"] .hours-row span {
+  font-size: 12.5px !important;
+}
+html[lang="ta"] .contact-card p, 
+html[lang="ta"] .contact-card a {
+  font-size: 13.5px !important;
+}
+html[lang="ta"] .contact-form-card label {
+  font-size: 11.5px !important;
+}
+
