@@ -285,8 +285,8 @@ export const translations = {
     review_4_name: "Faiizi",
     review_5_text: "\"I was trained by Mrs. Devi, who was extremely patient and ensured I learned proper driving skills step by step. Her calm and supportive guidance made a big difference in my learning experience. The last two sessions were conducted by Mr. Sanjay, who recognized my progress and focused on refining the areas where I needed improvement. His feedback was precise and very helpful.\"",
     review_5_name: "Priya Subramani",
-    review_6_text: "\"Professional school, modern cars, friendly staff. The government certification is genuine and I had zero issues at the RTO. Highly recommend GVV to anyone in Chennai!\"",
-    review_6_name: "Dinesh Murali"
+    review_6_text: "\"One of the Finest and comfortable Place to make urself Confident for ur Driving Experience. With no hesitations you may proceed here for Ur better driving Experince and along with ur License process to be done smoothly.\"",
+    review_6_name: "Sam Seelan"
   },
   ta: {
     // Navbar
@@ -572,7 +572,7 @@ export const translations = {
     review_4_name: "ஃபெய்சி",
     review_5_text: "\"எனக்கு திருமதி தேவி பயிற்சி அளித்தார், அவர் மிகவும் பொறுமையாக இருந்தார் மற்றும் முறையான ஓட்டுநர் திறன்களை படிப்படியாகக் கற்றுக்கொள்வதை உறுதி செய்தார். அவரது அமைதியான மற்றும் ஆதரவான வழிகாட்டுதல் எனது கற்றல் அனுபவத்தில் பெரிய மாற்றத்தை ஏற்படுத்தியது. கடைசி இரண்டு அமர்வுகளை திரு. சஞ்சய் நடத்தினார், அவர் எனது முன்னேற்றத்தை அங்கீகரித்து, நான் மேம்பட வேண்டிய பகுதிகளில் கவனம் செலுத்தினார். அவரது கருத்துக்கள் துல்லியமாகவும் மிகவும் பயனுள்ளதாகவும் இருந்தன.\"",
     review_5_name: "பிரியா சுப்பிரமணி",
-    review_6_text: "\"தொழில்முறை பள்ளி, நவீன கார்கள், நட்பு ஊழியர்கள். அரசாங்க சான்றிதழ் உண்மையானது மற்றும் ஆர்.டி.ஓ-வில் எனக்கு எந்த பிரச்சனையும் இல்லை. சென்னையில் உள்ள எவருக்கும் ஜி.வி.வி-யை மிகவும் பரிந்துரைக்கிறேன்!\"",
-    review_6_name: "தினேஷ் முரளி"
+    review_6_text: "\"ஓட்டுநர் பயிற்சியில் தன்னம்பிக்கையை வளர்க்க மிகவும் சிறந்த மற்றும் வசதியான இடம். எந்த வித தயக்கமும் இல்லாமல் இங்கு சேரலாம். சிறந்த ஓட்டுநர் பயிற்சியுடன், உங்கள் ஓட்டுநர் உரிமம் (லைசன்ஸ்) பெறும் செயல்முறையும் மிகவும் எளிதாகவும் சீராகவும் நடைபெறும்.\"",
+    review_6_name: "சாம் சலீன்"
   }
 };

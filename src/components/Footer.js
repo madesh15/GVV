@@ -44,14 +44,35 @@ export default function Footer({ navigate, variant = 'default' }) {
             <p style={s.brandP}>
               {isLadies ? t('footer_desc_ladies') : t('footer_desc_default')}
             </p>
+             <button
+              onClick={() => navigate('contact')}
+              style={{
+                marginTop: '14px',
+                background: 'transparent',
+                border: '1px solid rgba(201,168,76,0.55)',
+                color: '#C9A84C',
+                fontSize: '12px',
+                fontWeight: 600,
+                padding: '7px 16px',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                letterSpacing: '0.4px',
+                transition: 'all .2s',
+                fontFamily: "'DM Sans',sans-serif",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(201,168,76,0.12)'; e.currentTarget.style.borderColor = '#C9A84C'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(201,168,76,0.55)'; }}
+            >
+              {t('contact_us')} →
+            </button>
           </div>
           <div>
+            
             <h4 style={s.colH4}>{t('footer_col_pages')}</h4>
             {[
               ['landing', t('home')],
               ['courses', t('courses')],
               ['ladies', t('ladies_program')],
-              ['contact', t('contact_us')]
             ].map(([k, l]) => (
               <span key={k} style={s.colA} onClick={() => navigate(k)}>{l}</span>
             ))}

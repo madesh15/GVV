@@ -110,12 +110,13 @@ export default function ContactPage({ navigate }) {
         subtitle={t('contact_hero_subtitle')}
         navigate={navigate}
       />
+
       <div style={{ maxWidth: '1160px', margin: '0 auto', padding: '60px 5% 80px' }}>
         <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '50px', alignItems: 'start' }}>
 
-          {/* LEFT COLUMN */}
+          {/* ── LEFT COLUMN: GVV Info + Training Schedule ── */}
           <div>
-            {/* Contact Info */}
+            {/* GVV Driving School Info */}
             <div className="contact-card reveal">
               <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '22px' }}>{t('contact_title')}</h3>
               {contactRows.map((row, i) => (
@@ -131,7 +132,6 @@ export default function ContactPage({ navigate }) {
                     ) : row.labelKey === 'contact_lbl_email' ? (
                       <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>
                         <a href="mailto:Gvvds2009@gmail.com" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>Gvvds2009@gmail.com</a>
-                        <a href="mailto:Gvvds2009@gmail.com" style={{ color: '#0B1F3A', textDecoration: 'none', display: 'block' }}>Gvvds2009@gmail.com</a>
                       </p>
                     ) : (
                       <p style={{ fontSize: '14.5px', color: '#0B1F3A', fontWeight: 500, lineHeight: 1.55 }}>
@@ -143,7 +143,7 @@ export default function ContactPage({ navigate }) {
               ))}
             </div>
 
-            {/* Hours */}
+            {/* Training Schedule */}
             <div className="hours-card reveal">
               <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '20px' }}>{t('contact_sched_title')}</h3>
               {scheduleRows.map(([day, time, status]) => (
@@ -153,8 +153,11 @@ export default function ContactPage({ navigate }) {
                 </div>
               ))}
             </div>
+          </div>
 
-            {/* WhatsApp */}
+          {/* ── RIGHT COLUMN: WhatsApp + Ladies + Map + Form ── */}
+          <div>
+            {/* Chat on WhatsApp */}
             <a href="https://wa.me/919884772048?text=Hi!%20I%20want%20to%20know%20more%20about%20GVV%20Driving%20School." className="whatsapp-box reveal" target="_blank" rel="noreferrer">
               <div style={{ fontSize: '32px', flexShrink: 0 }}>💬</div>
               <div>
@@ -163,7 +166,7 @@ export default function ContactPage({ navigate }) {
               </div>
             </a>
 
-            {/* Ladies line */}
+            {/* Ladies Dedicated Enquiry Line */}
             <div className="reveal" style={{ background: 'linear-gradient(135deg,#2A0818,#430E28)', borderRadius: '16px', padding: '24px', marginBottom: '20px' }}>
               <h4 style={{ color: '#FF9ED4', fontSize: '15px', fontWeight: 700, marginBottom: '6px' }}>{t('contact_ladies_line_title')}</h4>
               <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13.5px', marginBottom: '12px' }}>{t('contact_ladies_line_desc')}</p>
@@ -173,43 +176,23 @@ export default function ContactPage({ navigate }) {
               </div>
             </div>
 
-            {/* Map Card */}
+            {/* Google Maps */}
             <div className="reveal" style={{ marginBottom: '20px' }}>
               <a
                 href="https://www.google.com/maps/search/?api=1&query=GVV+Driving+School+Virugambakkam+Chennai"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'block',
-                  position: 'relative',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  height: '240px',
-                  boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
-                  border: '1px solid rgba(11,31,58,0.1)',
-                  transition: 'all 0.3s ease',
-                  textDecoration: 'none'
-                }}
+                target="_blank" rel="noopener noreferrer"
+                style={{ display: 'block', position: 'relative', borderRadius: '16px', overflow: 'hidden', height: '240px', boxShadow: '0 8px 30px rgba(0,0,0,0.12)', border: '1px solid rgba(11,31,58,0.1)', transition: 'all 0.3s ease', textDecoration: 'none' }}
                 className="map-container-link"
               >
                 <iframe
                   title="GVV Driving School Location"
                   src="https://maps.google.com/maps?q=GVV%20Driving%20School,%20Virugambakkam,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="100%"
+                  width="100%" height="100%"
                   style={{ border: 0, pointerEvents: 'none' }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
-
                 <div
-                  style={{
-                    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'linear-gradient(to top, rgba(11,31,58,0.85) 0%, rgba(11,31,58,0.1) 60%)',
-                    display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-                    padding: '16px 20px', transition: 'all 0.3s ease',
-                  }}
+                  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(to top, rgba(11,31,58,0.85) 0%, rgba(11,31,58,0.1) 60%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '16px 20px', transition: 'all 0.3s ease' }}
                   className="map-overlay"
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
@@ -217,30 +200,18 @@ export default function ContactPage({ navigate }) {
                       <p style={{ margin: 0, fontSize: '11px', color: '#C9A84C', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{t('contact_map_lbl')}</p>
                       <h4 style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#fff', fontWeight: 600 }}>{t('contact_map_placeholder')}</h4>
                     </div>
-                    <span
-                      className="map-badge"
-                      style={{
-                        background: '#C9A84C', color: '#0B1F3A', padding: '6px 12px',
-                        borderRadius: '30px', fontSize: '11px', fontWeight: 700,
-                        display: 'flex', alignItems: 'center', gap: '4px',
-                        boxShadow: '0 4px 12px rgba(201,168,76,0.3)',
-                        transition: 'all 0.3s ease', marginLeft: 'auto'
-                      }}
-                    >
+                    <span className="map-badge" style={{ background: '#C9A84C', color: '#0B1F3A', padding: '6px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(201,168,76,0.3)', transition: 'all 0.3s ease', marginLeft: 'auto' }}>
                       {t('contact_map_badge')}
                     </span>
                   </div>
                 </div>
               </a>
             </div>
-          </div>
 
-          {/* RIGHT COLUMN: Form */}
-          <div>
+            {/* Send Us a Message Form */}
             <div className="contact-form-card reveal">
               <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '20px', color: '#0B1F3A', marginBottom: '6px' }}>{t('contact_form_title')}</h3>
               <p style={{ fontSize: '13.5px', color: '#888880', marginBottom: '24px' }}>{t('contact_form_desc')}</p>
-
               <div className="form-row-contact" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 <div className="form-group-light">
                   <label>{t('form_fullname')}</label>
@@ -273,11 +244,9 @@ export default function ContactPage({ navigate }) {
                 <label>{t('contact_form_msg')}</label>
                 <textarea style={iStyle('msg')} placeholder={t('contact_form_msg_ph')} value={form.msg} onChange={e => update('msg', e.target.value)} />
               </div>
-
               <button className="btn-submit-contact" onClick={submit} disabled={submitted}>
                 {submitted ? t('contact_form_submit_sent') : t('contact_form_submit')}
               </button>
-
               {submitted && (
                 <div style={{ background: '#E8F5EE', border: '1px solid rgba(26,107,60,0.3)', borderRadius: '16px', padding: '30px', textAlign: 'center', marginTop: '20px' }}>
                   <div style={{ fontSize: '40px', marginBottom: '12px' }}>✅</div>
@@ -287,8 +256,10 @@ export default function ContactPage({ navigate }) {
               )}
             </div>
           </div>
+
         </div>
       </div>
+
       <Footer navigate={navigate} />
     </div>
   );

@@ -87,16 +87,16 @@ const whyCards = [
 ];
 
 const reviews = [
-  { stars: 5, textKey: 'review_1_text', nameKey: 'review_1_name', tagKey: 'review_tag_ladies', initials: 'AN', bg: '#F8E8F0', color: '#D63384' },
-  { stars: 5, textKey: 'review_2_text', nameKey: 'review_2_name', tagKey: 'review_tag_four', initials: 'SK', bg: '#E8F0FB', color: '#1A3A8B' },
-  { stars: 5, textKey: 'review_3_text', nameKey: 'review_3_name', tagKey: 'review_tag_ladies_parent', initials: 'MR', bg: '#FDF4DC', color: '#7A5200' },
-  { stars: 5, textKey: 'review_4_text', nameKey: 'review_4_name', tagKey: 'review_tag_rto', initials: 'KP', bg: '#E8F5EE', color: '#1A6B3C' },
-  { stars: 5, textKey: 'review_5_text', nameKey: 'review_5_name', tagKey: 'review_tag_two_ladies', initials: 'SV', bg: '#FAECE7', color: '#8B3A1A' },
-  { stars: 5, textKey: 'review_6_text', nameKey: 'review_6_name', tagKey: 'review_tag_advanced', initials: 'DM', bg: '#EDEBFE', color: '#4C3AB5' },
+  { stars: 5, textKey: 'review_1_text', nameKey: 'review_1_name', tagKey: 'review_tag_ladies', initials: 'SK', bg: '#F8E8F0', color: '#D63384' },
+  { stars: 5, textKey: 'review_2_text', nameKey: 'review_2_name', tagKey: 'review_tag_four', initials: 'VS', bg: '#E8F0FB', color: '#1A3A8B' },
+  { stars: 5, textKey: 'review_3_text', nameKey: 'review_3_name', tagKey: 'review_tag_ladies_parent', initials: 'SC', bg: '#FDF4DC', color: '#7A5200' },
+  { stars: 5, textKey: 'review_4_text', nameKey: 'review_4_name', tagKey: 'review_tag_rto', initials: 'FA', bg: '#E8F5EE', color: '#1A6B3C' },
+  { stars: 5, textKey: 'review_5_text', nameKey: 'review_5_name', tagKey: 'review_tag_two_ladies', initials: 'PS', bg: '#FAECE7', color: '#8B3A1A' },
+  { stars: 5, textKey: 'review_6_text', nameKey: 'review_6_name', tagKey: 'review_tag_advanced', initials: 'SS', bg: '#EDEBFE', color: '#4C3AB5' },
 ];
 
 const certRows = [
-  { icon: '🏛️', titleKey: 'about_cert_1_title', descKey: 'about_cert_1_desc' },
+ 
   { icon: '🛡️', titleKey: 'about_cert_2_title', descKey: 'about_cert_2_desc' },
   { icon: '♀', titleKey: 'about_cert_3_title', descKey: 'about_cert_3_desc' },
   { icon: '🚗', titleKey: 'about_cert_4_title', descKey: 'about_cert_4_desc' }
@@ -318,10 +318,12 @@ export default function LandingPage({ navigate }) {
         </div>
         <div className="reviews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '22px', maxWidth: '1160px', margin: '0 auto' }}>
           {reviews.map(r => (
-            <div className="review-card reveal" key={r.nameKey}>
-              <div style={{ color: '#C9A84C', fontSize: '15px', letterSpacing: '2px', marginBottom: '14px' }}>{'★'.repeat(r.stars)}</div>
-              <p style={{ fontSize: '14.5px', lineHeight: 1.75, color: '#444440', marginBottom: '20px', fontStyle: 'italic' }}>{t(r.textKey)}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="review-card reveal" key={r.nameKey} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ color: '#C9A84C', fontSize: '15px', letterSpacing: '2px', marginBottom: '14px' }}>{'★'.repeat(r.stars)}</div>
+                <p style={{ fontSize: '14.5px', lineHeight: 1.75, color: '#444440', marginBottom: '20px', fontStyle: 'italic' }}>{t(r.textKey)}</p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid #F0F0E8' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, flexShrink: 0, background: r.bg, color: r.color }}>{r.initials}</div>
                 <div>
                   <div className="review-card-name" style={{ fontWeight: 600, fontSize: '13.5px', color: '#0B1F3A' }}>{t(r.nameKey)}</div>
